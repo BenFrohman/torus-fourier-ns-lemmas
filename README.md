@@ -57,6 +57,27 @@ and velocity mode `û ∈ ℂ³` with `k·û = 0` (divergence free):
 - `curl_modeFunctionalDerivative_eq_u` (`k ≠ 0`, `k·û = 0`): `curl(δH/δω) = û` for the
   choice-based derivative at `ω̂ = curl û`, with no hypothesis on the derivative.
 
+**Whole-field Biot–Savart and the curl identity** (`TorusFourierNS/FieldBiotSavart.lean`),
+unconditional. A field is given by its Fourier coefficients `v : ℤ³ → ℂ³`. Function space:
+vorticities of finite kinetic energy, `FinEnergy ω :⇔ ∑ₙ |ω̂ₙ|²/(8π²|n|²) < ∞` (that is,
+`ω ∈ Ḣ⁻¹(T³)`, the `n = 0` term being `0`); variations range over the same space. Velocities:
+`IsL2DivFreeMeanZero u` means `∑ₙ |ûₙ|² < ∞` (`u ∈ L²(T³)³`), `n·ûₙ = 0` for all `n`, and `û₀ = 0`.
+- `fieldEnergy ω = ∑ₙ |ω̂ₙ|²/(8π²|n|²)`; `fieldStream ω`: `ψ̂ₙ = ω̂ₙ/(4π²|n|²)`, `ψ̂₀ = 0`;
+  `fieldCurl v`: `(curl v)̂ₙ = 2πi n×v̂ₙ`.
+- `fieldEnergy_expand`: for finite-energy `ω, η` and real `ε`,
+  `H(ω+εη) = H(ω) + ε⟨ψ, η⟩ + ε²H(η)`, `⟨δ, η⟩ = Re ∑ₙ ∑ᵢ conj(δ̂ₙᵢ)η̂ₙᵢ` (all series converge).
+- `fieldStream_isGateauxRep`: `ψ` is a Gateaux representative of `H` at `ω`.
+- `fieldGateauxRep_unique`: any two representatives are equal (no condition on the candidates).
+- `fieldFunctionalDerivative_energy`: the choice-based derivative `δH/δω` equals `ψ`.
+- `fieldEnergy_curl`: `H(curl u) = ½ ∑ₙ |ûₙ|²` for `IsL2DivFreeMeanZero u`.
+- `fieldCurl_stream_eq`: `curl ψ = u` at `ω = curl u` (Biot–Savart).
+- `streamFunctionRepresentative_T3`: for `IsL2DivFreeMeanZero u` there is `ψ` that is the unique
+  Gateaux representative of `H` at `curl u` and has `curl ψ = u`.
+- `fieldCurl_functionalDerivative_eq`: `curl(δH/δω) = u` at `ω = curl u` for every
+  `IsL2DivFreeMeanZero u`.
+- `fieldEnergy_curl_L2`: for `u : (L²(T³))³` whose coefficients are divergence free with zero
+  mean, `H(curl u) = ½ ∑ᵢ ‖uᵢ‖²_{L²}` (Parseval) and `curl(δH/δω) = û`.
+
 **`L²` strain bound** (`TorusFourierNS/Strain.lean`):
 - `L2_strain_eq`, `L2_strain_le`: if `u, ω, S` are `L²(T³)` fields whose Fourier coefficients are
   those of a divergence-free velocity `u`, its vorticity `ω = curl u` and its strain
@@ -67,7 +88,6 @@ and velocity mode `û ∈ ℂ³` with `k·û = 0` (divergence free):
 ## Not proved here
 
 - `Lᵖ` strain bounds for `p ≠ 2` (these need Calderón–Zygmund theory, absent from Mathlib).
-- Smoothing with non-integer gain `k`.
 - Any statement about existence, uniqueness or regularity of Navier–Stokes solutions.
 
 ## Build
