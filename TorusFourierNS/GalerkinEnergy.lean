@@ -21,7 +21,8 @@ Coined names: `restrictG`, `HermitianField`, `GalerkinHsEnergyInequality`, `ode_
   divergence-free satisfies `‖u_N(t)‖²_{H^s} ≤ ‖a‖²_{H^s} + 1` on `[0, barrierTime C ‖a‖²]`,
   uniformly in `N`.
 
-**NOT proved:** `GalerkinHsEnergyInequality` itself. It needs the cancellation of the leading
+**Proved elsewhere:** `GalerkinTransportBound s (transportConst s)` for `s > 5/2` is proved in
+`TorusFourierNS.TransportBound` (`galerkinTransportBound_of_gt`). Historical note: it needs the cancellation of the leading
 transport term `Re⟨Λ^s u, Λ^s P(u·∇u)⟩ = Re⟨Λ^s u, [Λ^s, u·∇]u⟩` (uses Hermitian symmetry and
 `DivergenceFree`) and a Kato–Ponce commutator bound, plus the `ℓ¹`-summability of `|k| |û_k|`
 for `s > 5/2`. The Hermitian hypothesis is necessary: for complex non-Hermitian fields the
@@ -97,7 +98,8 @@ theorem hsNormField_extendG_restrictG_le {s : ℝ} {a : FField} (ha : MemHsField
     fun p => mul_nonneg (sobW_pos s p.1).le (sq_nonneg _)
   exact (Summable.of_nonneg_of_le hnn hle ha).tsum_le_tsum hle ha
 
-/-- **Named Prop (NOT proved).** The Galerkin `H^s` energy inequality
+/-- **Named Prop; proved for `ν ≥ 0`, `s > 5/2` in `TransportBound`
+(`galerkinHsEnergyInequality_of_gt`).** The Galerkin `H^s` energy inequality
 `d/dt ‖u_N‖²_{H^s} ≤ C (‖u_N‖²_{H^s})^{3/2}` along Hermitian divergence-free states, with `C`
 independent of `N`. -/
 def GalerkinHsEnergyInequality (ν s C : ℝ) : Prop :=
@@ -155,7 +157,8 @@ theorem hsNormSq_extendG_hasDerivAt (s : ℝ) {N : ℕ} {α : ℝ → GState N} 
 lemma galerkinNSField_apply {N : ℕ} (ν : ℝ) (u : GState N) (k : modeBox N) (i : Fin 3) :
     galerkinNSField N ν u k i = (-viscCoeff ν k.1) • u k i + -(nsBilin u u k i) := rfl
 
-/-- **Named Prop (NOT proved).** Static transport bound: the `H^s` pairing of `u` with the
+/-- **Named Prop; proved for `s > 5/2` with `C = transportConst s` in `TransportBound`
+(`galerkinTransportBound_of_gt`).** Static transport bound: the `H^s` pairing of `u` with the
 projected nonlinearity is `≤ C ‖u‖³_{H^s}` (Hermitian, divergence-free `u`, `C` independent of
 `N`). This is where the transport cancellation and the commutator estimate enter. -/
 def GalerkinTransportBound (s C : ℝ) : Prop :=
