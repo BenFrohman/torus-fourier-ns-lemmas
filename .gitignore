@@ -1,0 +1,5 @@
+.lake/
+*.olean
+paper/*.aux
+paper/*.log
+paper/*.out

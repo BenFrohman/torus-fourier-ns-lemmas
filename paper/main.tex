@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\newtheorem{theorem}{Theorem}\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}\newtheorem*{commentary}{Commentary}
+\title{Fourier Lemmas on the Three-Torus: Heat Smoothing, the $L^2$ Strain Identity,\\ and the Curl of the Energy Derivative, Formalised in Lean~4}
+\author{Benjamin Stanley Frohman\\ORCID 0009-0006-7068-3718}
+\date{DRAFT --- 30 October 2026}
+\begin{document}\maketitle
+% Drafting plan: the mathematics in every section is taken from the Lean build
+% (TorusFourierNS/*.lean). Commentary blocks carry the author's own narration of how each
+% step grew out of earlier skeletons and mistakes, drawn from his documents, Drive notes,
+% prior builds, blueprints and READMEs. Commentary still to be expanded from those sources
+% is marked TODO-COMMENTARY in this source file only.
+
+\begin{abstract}
+On $\mathbb T^3=(\mathbb R/\mathbb Z)^3$, the product of three circles, we prove in Lean~4 with Mathlib,
+with no \texttt{sorry} and only the standard axioms: the heat semigroup is the Fourier multiplier
+$e^{-\nu|n|^2t}$, obeys the semigroup law and contracts $L^2$; it maps $H^s$ to $H^{s+k}$ with
+$\|e^{t\nu\Delta}f\|_{H^{s+k}}^2\le k!\,e^{2\nu t}(2\nu t)^{-k}\|f\|_{H^s}^2$; for divergence-free
+velocity fields $\|S\|_2^2=\tfrac12\|\omega\|_2^2$; and the kinetic energy, viewed as a function of
+vorticity, has derivative the stream function, whose curl is the velocity.
+\end{abstract}
+
+\section{Setting}
+$\mathbb T^3$ carries normalised Haar measure; $e_n(x)=e^{2\pi i n\cdot x}$, $n\in\mathbb Z^3$, is a
+Hilbert basis of $L^2(\mathbb T^3)$ (Mathlib's \texttt{mFourierBasis}), and
+$\hat f(n)=\int f\,\overline{e_n}$.
+\begin{lemma}[Parseval, \texttt{parseval\_norm\_sq}] $\|f\|_2^2=\sum_n|\hat f(n)|^2$.\end{lemma}
+\begin{proof} The coefficient map is a linear isometry $L^2\to\ell^2(\mathbb Z^3)$ and
+$\|a\|_{\ell^2}^2=\sum|a_n|^2$.\end{proof}
+\begin{lemma}[\texttt{norm\_multiplier\_le}] If $|m(n)|\le1$ for all $n$, then $T_m f=\sum m(n)\hat f(n)e_n$
+defines $T_m:L^2\to L^2$ with $\|T_mf\|_2\le\|f\|_2$.\end{lemma}
+\begin{proof} $\sum|m(n)\hat f(n)|^2\le\sum|\hat f(n)|^2<\infty$, so the sequence lies in $\ell^2$;
+pull back by the isometry and apply Parseval.\end{proof}
+\begin{commentary} The torus is three circles, so the Fourier side is already in Mathlib; only
+the Sobolev scale has to be built, and on the torus it is a weighted coefficient sum.
+TODO-COMMENTARY.\end{commentary}
+
+\section{Heat semigroup}
+\begin{theorem} For $\nu,s,t\ge0$: $\widehat{e^{t\nu\Delta}f}(n)=e^{-\nu|n|^2t}\hat f(n)$,
+$e^{0}=\mathrm{id}$, $e^{s\nu\Delta}e^{t\nu\Delta}=e^{(s+t)\nu\Delta}$, $\|e^{t\nu\Delta}f\|_2\le\|f\|_2$.\end{theorem}
+\begin{proof} The symbol has modulus $\le1$; $e^{-\nu|n|^2s}e^{-\nu|n|^2t}=e^{-\nu|n|^2(s+t)}$ and
+operators with equal coefficients are equal.\end{proof}
+
+\section{Sobolev smoothing}
+$\|f\|_{H^s}^2=\sum_n(1+|n|^2)^s|\hat f(n)|^2$.
+\begin{lemma} For $k\in\mathbb N$, $a>0$, $x\ge0$: $(1+x)^ke^{-ax}\le k!\,e^a a^{-k}$.\end{lemma}
+\begin{proof} $y^k/k!\le e^y$ with $y=a(1+x)$, and $e^{-ax}=e^ae^{-a(1+x)}$.\end{proof}
+\begin{theorem}[\texttt{heat\_smoothing}] For $\nu,t>0$, $s\in\mathbb R$, $k\in\mathbb N$, $f\in H^s$:
+$e^{t\nu\Delta}f\in H^{s+k}$ and $\|e^{t\nu\Delta}f\|_{H^{s+k}}^2\le k!\,e^{2\nu t}(2\nu t)^{-k}\|f\|_{H^s}^2$.\end{theorem}
+\begin{proof} Mode by mode,
+$(1+|n|^2)^{s+k}e^{-2\nu t|n|^2}|\hat f|^2\le k!e^{2\nu t}(2\nu t)^{-k}(1+|n|^2)^s|\hat f|^2$ by the lemma with
+$a=2\nu t$; sum by comparison.\end{proof}
+
+\section{Strain and vorticity}
+For $k\in\mathbb R^3$, $\hat u\in\mathbb C^3$, $k\cdot\hat u=0$: $\hat S_{ij}=\pi i(k_i\hat u_j+k_j\hat u_i)$, $\hat\omega=2\pi i\,k\times\hat u$.
+\begin{lemma} $\sum_{ij}|\hat S_{ij}|^2=\tfrac12|\hat\omega|^2$ and $|\hat\omega|^2=4\pi^2|k|^2|\hat u|^2$.\end{lemma}
+\begin{proof} Splitting $\hat u=a+ib$, for each real part
+$\sum_{ij}(k_ia_j+k_ja_i)^2=2(|k|^2|a|^2+(k\cdot a)^2)$ and $|k\times a|^2=|k|^2|a|^2-(k\cdot a)^2$; both
+$k\cdot a$ and $k\cdot b$ vanish.\end{proof}
+\begin{theorem}[\texttt{L2\_strain\_eq}] For $L^2$ fields with these coefficients, $\|S\|_2^2=\tfrac12\|\omega\|_2^2\le\|\omega\|_2^2$.\end{theorem}
+\begin{proof} Parseval on each component, exchange the finite and infinite sums, apply the lemma per mode.\end{proof}
+
+\section{The curl of the energy derivative}
+$\hat\psi=\hat\omega/(4\pi^2|k|^2)$, $H(\hat\omega)=|\hat\omega|^2/(8\pi^2|k|^2)$.
+\begin{theorem} For $k\ne0$, $k\cdot\hat u=0$: $H(\mathrm{curl}\,\hat u)=\tfrac12|\hat u|^2$;
+$H(\omega+\varepsilon\eta)=H(\omega)+\varepsilon\,\mathrm{Re}\langle\hat\psi,\eta\rangle+\varepsilon^2H(\eta)$, so
+$\delta H/\delta\omega=\hat\psi$; and $2\pi i\,k\times\hat\psi=\hat u$, i.e.\ $\mathrm{curl}(\delta H/\delta\omega)=u$.\end{theorem}
+\begin{proof} $k\times(k\times\hat u)=k(k\cdot\hat u)-|k|^2\hat u=-|k|^2\hat u$, so
+$(2\pi i)^2k\times(k\times\hat u)/(4\pi^2|k|^2)=\hat u$. The expansion is the polarisation of a real quadratic form.\end{proof}
+\begin{commentary} In the tether build the derivative $\delta H/\delta\omega$ was an abstract
+choice, and the $\psi$-slot tether failed energy degeneracy because $\delta H/\delta\omega$ is $\psi$, not $u$.
+Here, in concrete Fourier variables, the identity the velocity-slot tether needs is a theorem.
+TODO-COMMENTARY.\end{commentary}
+
+\section{Scope}
+Only $p=2$ strain bounds and integer smoothing orders are proved. Nothing here concerns
+existence or regularity of Navier--Stokes solutions.
+\end{document}
