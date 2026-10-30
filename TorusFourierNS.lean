@@ -2,3 +2,4 @@ import TorusFourierNS.Basic
 import TorusFourierNS.Heat
 import TorusFourierNS.Strain
 import TorusFourierNS.GateauxBridge
+import TorusFourierNS.FieldBiotSavart
