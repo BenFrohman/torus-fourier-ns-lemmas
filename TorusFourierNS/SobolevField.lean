@@ -11,7 +11,7 @@ Coined names (not from the user's original vocabulary): `sobW`, `MemHsField`,
 
 Proved: triangle inequality, completeness, closedness of `DivergenceFree` in `H^s`,
 Peetre weight inequality, Galerkin (finite-dimensional, quadratic) local existence.
-Stated only (named Props, NOT proved): product and commutator estimates, uniform
+Stated only (named Props, NOT proved): commutator estimate (product estimate now proved in SobolevProduct), uniform
 Galerkin bounds and the compactness passage to the limit.
 -/
 
@@ -201,7 +201,7 @@ theorem sobW_peetre {s : ℝ} (hs : 0 ≤ s) (k j : Mode) :
 /-- Fourier convolution (componentwise product of fields), as a `tsum`. -/
 def fconv (f g : FField) : FField := fun k i => ∑' j : Mode, f (k - j) i * g j i
 
-/-- **Algebra property** of `H^s`, `s > 3/2` (NOT proved here). -/
+/-- **Algebra property** of `H^s`, `s > 3/2` (stated here; PROVED for `3/2 < s` in `SobolevProduct.sobolevProductEstimate`). -/
 def SobolevProductEstimate (s : ℝ) : Prop :=
   ∃ C : ℝ, 0 ≤ C ∧ ∀ f g : FField, MemHsField s f → MemHsField s g →
     MemHsField s (fconv f g) ∧ hsNormField s (fconv f g) ≤ C * hsNormField s f * hsNormField s g

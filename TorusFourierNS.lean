@@ -4,3 +4,5 @@ import TorusFourierNS.Strain
 import TorusFourierNS.GateauxBridge
 import TorusFourierNS.FieldBiotSavart
 import TorusFourierNS.SobolevField
+import TorusFourierNS.SobolevProduct
+import TorusFourierNS.GalerkinNS

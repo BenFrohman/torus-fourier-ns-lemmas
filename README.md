@@ -112,3 +112,18 @@ lake env lean AxiomAudit.lean
 ```
 
 Copyright 2026 Benjamin Stanley Frohman (ORCID 0009-0006-7068-3718). Apache-2.0.
+
+## SobolevProduct and GalerkinNS (added)
+
+**Proved (unconditional, axioms: propext/Classical.choice/Quot.sound only):**
+- `sobolevProductEstimate (hs : 3/2 < s) : SobolevProductEstimate s`, with explicit constant
+  `hsConst s = 2·2^s·sqrt(∑ sobW (-s) k)`, via Peetre, Cauchy–Schwarz and Young (ℓ²·ℓ¹) in ℝ≥0∞.
+  Caveat: `fconv` is defined with `∑'` (zero when not summable); the estimate is proved for `fconv` as defined.
+- `GalerkinNS`: concrete truncated system on the mode box `|k_i| ≤ N` (`modeBox`, `GState`, coined names):
+  Leray projector `lerayP` (output is divergence-free, linear), convective term `gconv`,
+  bilinear form `nsBilinCLM` (continuous bilinear), viscous term `viscCLM`, field `galerkinNSField`,
+  local existence `galerkinNS_local_existence` (Picard–Lindelöf), and
+  `galerkinNS_divergenceFree`: DivergenceFree initial data stays DivergenceFree on the existence interval.
+
+**Still NOT proved (remain named Props):** `SobolevCommutatorEstimate`, `GalerkinUniformHsBound`,
+`GalerkinCompactnessLimit`. Nothing here proves the Clay problem.
