@@ -61,7 +61,7 @@ and velocity mode `û ∈ ℂ³` with `k·û = 0` (divergence free):
 unconditional. A field is given by its Fourier coefficients `v : ℤ³ → ℂ³`. Function space:
 vorticities of finite kinetic energy, `FinEnergy ω :⇔ ∑ₙ |ω̂ₙ|²/(8π²|n|²) < ∞` (that is,
 `ω ∈ Ḣ⁻¹(T³)`, the `n = 0` term being `0`); variations range over the same space. Velocities:
-`IsL2DivFreeMeanZero u` means `∑ₙ |ûₙ|² < ∞` (`u ∈ L²(T³)³`), `n·ûₙ = 0` for all `n`, and `û₀ = 0`.
+`DivergenceFreeL2MeanZero u` means `∑ₙ |ûₙ|² < ∞` (`u ∈ L²(T³)³`), `n·ûₙ = 0` for all `n`, and `û₀ = 0`.
 - `fieldEnergy ω = ∑ₙ |ω̂ₙ|²/(8π²|n|²)`; `fieldStream ω`: `ψ̂ₙ = ω̂ₙ/(4π²|n|²)`, `ψ̂₀ = 0`;
   `fieldCurl v`: `(curl v)̂ₙ = 2πi n×v̂ₙ`.
 - `fieldEnergy_expand`: for finite-energy `ω, η` and real `ε`,
@@ -69,12 +69,12 @@ vorticities of finite kinetic energy, `FinEnergy ω :⇔ ∑ₙ |ω̂ₙ|²/(8π
 - `fieldStream_isGateauxRep`: `ψ` is a Gateaux representative of `H` at `ω`.
 - `fieldGateauxRep_unique`: any two representatives are equal (no condition on the candidates).
 - `fieldFunctionalDerivative_energy`: the choice-based derivative `δH/δω` equals `ψ`.
-- `fieldEnergy_curl`: `H(curl u) = ½ ∑ₙ |ûₙ|²` for `IsL2DivFreeMeanZero u`.
+- `fieldEnergy_curl`: `H(curl u) = ½ ∑ₙ |ûₙ|²` for `DivergenceFreeL2MeanZero u`.
 - `fieldCurl_stream_eq`: `curl ψ = u` at `ω = curl u` (Biot–Savart).
-- `streamFunctionRepresentative_T3`: for `IsL2DivFreeMeanZero u` there is `ψ` that is the unique
+- `streamFunctionRepresentative_T3`: for `DivergenceFreeL2MeanZero u` there is `ψ` that is the unique
   Gateaux representative of `H` at `curl u` and has `curl ψ = u`.
 - `fieldCurl_functionalDerivative_eq`: `curl(δH/δω) = u` at `ω = curl u` for every
-  `IsL2DivFreeMeanZero u`.
+  `DivergenceFreeL2MeanZero u`.
 - `fieldEnergy_curl_L2`: for `u : (L²(T³))³` whose coefficients are divergence free with zero
   mean, `H(curl u) = ½ ∑ᵢ ‖uᵢ‖²_{L²}` (Parseval) and `curl(δH/δω) = û`.
 

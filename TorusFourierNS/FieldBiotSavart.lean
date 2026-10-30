@@ -181,10 +181,18 @@ theorem fieldFunctionalDerivative_energy {ω : FField} (hω : FinEnergy ω) :
 
 /-! ### Velocity fields: finite energy, curl identity -/
 
-/-- Divergence-free, mean-zero velocity with `∑ₙ |ûₙ|² < ∞` (i.e. `u ∈ L²(T³)`). -/
-structure IsL2DivFreeMeanZero (u : FField) : Prop where
+/-- `DivergenceFree u` (the May 28, 2026 skeleton's predicate, `Skeleton/PaperOverview.lean`):
+`div u = 0`, stated on Fourier coefficients as `k · ûₖ = 0` for every mode. -/
+def DivergenceFree (u : FField) : Prop := ∀ n, dot (kvec n) (u n) = 0
+
+theorem divergenceFree_iff (u : FField) : DivergenceFree u ↔ ∀ n, dot (kvec n) (u n) = 0 :=
+  Iff.rfl
+
+/-- `DivergenceFree`, mean-zero velocity with `∑ₙ |ûₙ|² < ∞` (i.e. `u ∈ L²(T³)`): the class
+`{u // DivergenceFree u ∧ u ∈ L2 𝕋³}` of the May 28 skeleton, plus mean zero. -/
+structure DivergenceFreeL2MeanZero (u : FField) : Prop where
   summable : Summable fun n => ∑ i, ‖u n i‖ ^ 2
-  div_free : ∀ n, dot (kvec n) (u n) = 0
+  div_free : DivergenceFree u
   mean_zero : u 0 = 0
 
 lemma kvec_ksq_ne_zero {n : Mode} (hn : n ≠ 0) : ksq (kvec n) ≠ 0 := by
@@ -198,24 +206,24 @@ lemma kvec_ksq_ne_zero {n : Mode} (hn : n ≠ 0) : ksq (kvec n) ≠ 0 := by
   have : (n i : ℝ) = 0 := by simpa [kvec] using this
   exact_mod_cast this
 
-lemma modeE_curl (u : FField) (hu : IsL2DivFreeMeanZero u) (n : Mode) :
+lemma modeE_curl (u : FField) (hu : DivergenceFreeL2MeanZero u) (n : Mode) :
     modeE n (fieldCurl u n) = (1 / 2) * ∑ i, ‖u n i‖ ^ 2 := by
   by_cases hn : n = 0
   · subst hn; simp [modeE, modeEnergy, hu.mean_zero, fieldCurl, curlSym, cross, ksq, kvec]
   · exact modeEnergy_curl _ _ (kvec_ksq_ne_zero hn) (hu.div_free n)
 
-theorem finEnergy_curl {u : FField} (hu : IsL2DivFreeMeanZero u) : FinEnergy (fieldCurl u) := by
+theorem finEnergy_curl {u : FField} (hu : DivergenceFreeL2MeanZero u) : FinEnergy (fieldCurl u) := by
   unfold FinEnergy
   simp only [modeE_curl u hu]
   exact hu.summable.mul_left _
 
 /-- `H(curl u) = ½ ∑ₙ |ûₙ|²`. -/
-theorem fieldEnergy_curl {u : FField} (hu : IsL2DivFreeMeanZero u) :
+theorem fieldEnergy_curl {u : FField} (hu : DivergenceFreeL2MeanZero u) :
     fieldEnergy (fieldCurl u) = (1 / 2) * ∑' n, ∑ i, ‖u n i‖ ^ 2 := by
   unfold fieldEnergy; simp only [modeE_curl u hu]; exact tsum_mul_left
 
 /-- **Biot–Savart:** `curl ψ = u` where `ψ` is the stream function of `ω = curl u`. -/
-theorem fieldCurl_stream_eq {u : FField} (hu : IsL2DivFreeMeanZero u) :
+theorem fieldCurl_stream_eq {u : FField} (hu : DivergenceFreeL2MeanZero u) :
     fieldCurl (fieldStream (fieldCurl u)) = u := by
   funext n
   by_cases hn : n = 0
@@ -227,7 +235,7 @@ theorem fieldCurl_stream_eq {u : FField} (hu : IsL2DivFreeMeanZero u) :
 /-- **Stream-function representative on `T³`.** For every divergence-free, mean-zero
 `u ∈ L²(T³)` and `ω = curl u`, there is `ψ` that is a Gateaux representative of the kinetic
 energy at `ω`, is the only one, and has `curl ψ = u`. -/
-theorem streamFunctionRepresentative_T3 {u : FField} (hu : IsL2DivFreeMeanZero u) :
+theorem streamFunctionRepresentative_T3 {u : FField} (hu : DivergenceFreeL2MeanZero u) :
     ∃ ψ : FField, IsFieldGateauxRep fieldEnergy (fieldCurl u) ψ ∧
       (∀ d, IsFieldGateauxRep fieldEnergy (fieldCurl u) d → d = ψ) ∧
       fieldCurl ψ = u :=
@@ -238,7 +246,7 @@ theorem streamFunctionRepresentative_T3 {u : FField} (hu : IsL2DivFreeMeanZero u
 /-- **Kinetic-energy curl identity on `T³`, unconditional:** `curl(δH/δω) = u` for the
 choice-based functional derivative at `ω = curl u`, for every divergence-free, mean-zero
 `u ∈ L²(T³)`. -/
-theorem fieldCurl_functionalDerivative_eq {u : FField} (hu : IsL2DivFreeMeanZero u) :
+theorem fieldCurl_functionalDerivative_eq {u : FField} (hu : DivergenceFreeL2MeanZero u) :
     fieldCurl (fieldFunctionalDerivative fieldEnergy (fieldCurl u)) = u := by
   rw [fieldFunctionalDerivative_energy (finEnergy_curl hu)]
   exact fieldCurl_stream_eq hu
@@ -259,7 +267,7 @@ theorem fieldEnergy_curl_L2 (u : Fin 3 → L2T3)
     fieldEnergy (fieldCurl (coeffField u)) = (1 / 2) * ∑ i, ‖u i‖ ^ 2 ∧
       fieldCurl (fieldFunctionalDerivative fieldEnergy (fieldCurl (coeffField u))) =
         coeffField u := by
-  have hu : IsL2DivFreeMeanZero (coeffField u) := ⟨summable_coeffField u, hdiv, hmean⟩
+  have hu : DivergenceFreeL2MeanZero (coeffField u) := ⟨summable_coeffField u, hdiv, hmean⟩
   refine ⟨?_, fieldCurl_functionalDerivative_eq hu⟩
   rw [fieldEnergy_curl hu]
   congr 1
