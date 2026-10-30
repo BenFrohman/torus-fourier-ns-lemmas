@@ -127,3 +127,23 @@ Copyright 2026 Benjamin Stanley Frohman (ORCID 0009-0006-7068-3718). Apache-2.0.
 
 **Still NOT proved (remain named Props):** `SobolevCommutatorEstimate`, `GalerkinUniformHsBound`,
 `GalerkinCompactnessLimit`. Nothing here proves the Clay problem.
+
+## FconvSummable and GalerkinEnergy (added)
+
+**Proved:**
+- `summable_fconv_inner` (and `summable_norm_fconv_inner`, `summable_fconv_inner_of_gt`): for
+  `f g ∈ H^s`, `s ≥ 0` (so in particular `s > 3/2`), the inner series of `fconv` converges
+  absolutely. So `fconv` is the genuine convolution, not the `∑'` junk value.
+- `hsNormSq_extendG`, `hsNormSq_extendG_hasDerivAt`: `‖u_N‖²_{H^s}` is a finite sum and its time
+  derivative along a Galerkin curve is `∑ w_k · 2⟨u_k, u_k'⟩`.
+- `galerkinHsEnergyInequality_of_transport`: for `ν ≥ 0` the viscous term only dissipates, so the
+  static bound `GalerkinTransportBound s C` implies `GalerkinHsEnergyInequality ν s C`.
+- `ode_barrier`: `y' ≤ C y^{3/2}`, `y(0) ≤ Y` gives `y ≤ Y+1` on `[0, barrierTime C Y]`.
+- `galerkin_uniform_bound_of_energy`: assuming `GalerkinHsEnergyInequality`, every Galerkin solution
+  from the truncation of `a ∈ H^s` that stays Hermitian and divergence-free satisfies
+  `‖u_N‖²_{H^s} ≤ ‖a‖²_{H^s}+1` on `[0, barrierTime C ‖a‖²]`, uniformly in `N`.
+
+**NOT proved (named Props):** `GalerkinTransportBound s C` (transport cancellation plus a
+Kato–Ponce commutator bound; this is the analytic core of the estimate) and, as before,
+`SobolevCommutatorEstimate`. Coined names: `restrictG`, `HermitianField`, `barrierTime`,
+`GalerkinHsEnergyInequality`, `GalerkinTransportBound`.
