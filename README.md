@@ -163,5 +163,17 @@ The range `3/2 < s ≤ 5/2` is not covered. Coined names in this file: `nrm`, `b
 `transportConst`, `galerkinTransportBound_of_gt`, `galerkinHsEnergyInequality_of_gt`,
 `galerkin_uniform_bound_of_gt`.
 
+### Structure preservation (`TorusFourierNS/GalerkinStructure.lean`)
+
+**Proved:** `galerkinNS_hermitian_Icc`, `galerkinNS_divergenceFree_Icc`, `galerkinNS_structure_Icc`:
+a Galerkin solution on `[0,T]` whose initial state is Hermitian and divergence-free stays so on
+`[0,T]` (Hermitian part: the field commutes with `v_k ↦ conj v_{-k}` (`galerkinNSField_reflG`) plus
+ODE uniqueness (`ode_unique_Icc`)). Also `hermitian_extendG_restrictG` and
+`divergenceFree_extendG_restrictG`: truncation keeps both properties. So the `hstruct` hypothesis of
+`galerkin_uniform_bound_of_gt` reduces to Hermitian, divergence-free data `a`. Coined names: `negG`,
+`reflG`, `galerkinNSField_reflG`, `ode_unique_Icc`, `galerkinNS_hermitian_Icc`,
+`galerkinNS_divergenceFree_Icc`, `galerkinNS_structure_Icc`, `hermitian_extendG_restrictG`,
+`divergenceFree_extendG_restrictG`.
+
 **Still NOT proved (named Props):** `SobolevCommutatorEstimate`. Coined names: `restrictG`, `HermitianField`, `barrierTime`,
 `GalerkinHsEnergyInequality`, `GalerkinTransportBound`.
