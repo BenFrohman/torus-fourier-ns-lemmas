@@ -48,6 +48,15 @@ and velocity mode `û ∈ ℂ³` with `k·û = 0` (divergence free):
   are per-mode identities, so they hold for every field mode by mode, including all trigonometric
   polynomials with zero mean.
 
+**Gateaux derivative** (`TorusFourierNS/GateauxBridge.lean`):
+- `IsModeGateauxRep F ω δ`: `d/dε|₀ F(ω+εη) = Re ∑ᵢ conj(δᵢ)ηᵢ` for every `η`.
+  `modeFunctionalDerivative F ω` is the representative chosen by `Classical.choose` (else `0`).
+- `modeGateauxRep_unique`: the representative is unique.
+- `modeFunctionalDerivative_eq`: any representative equals the choice-based derivative.
+- `modeFunctionalDerivative_modeEnergy`: `δH/δω = ψ̂`.
+- `curl_modeFunctionalDerivative_eq_u` (`k ≠ 0`, `k·û = 0`): `curl(δH/δω) = û` for the
+  choice-based derivative at `ω̂ = curl û`, with no hypothesis on the derivative.
+
 **`L²` strain bound** (`TorusFourierNS/Strain.lean`):
 - `L2_strain_eq`, `L2_strain_le`: if `u, ω, S` are `L²(T³)` fields whose Fourier coefficients are
   those of a divergence-free velocity `u`, its vorticity `ω = curl u` and its strain
