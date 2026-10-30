@@ -85,7 +85,21 @@ vorticities of finite kinetic energy, `FinEnergy ω :⇔ ∑ₙ |ω̂ₙ|²/(8π
   Fourier-side definitions of divergence-free, curl and strain; the result covers every
   velocity field whose vorticity and strain lie in `L²`.
 
+### Vector `H^s` fields on T³ (`TorusFourierNS/SobolevField.lean`)
+
+Proved (0 sorry, audit clean): `MemHsField`/`hsNormField` on `FField` via weights
+`(1+|k|²)^s`; closure under `+`/`-`; **triangle inequality** (`hsNormField_add_le`);
+**completeness** (`hsField_complete`, via `lp` completeness); coefficient bound and
+coefficientwise convergence; **`DivergenceFree` is closed under `H^s` limits** and under
+`+`, scalar `•`; Peetre weight inequality `sobW_peetre` (first step of the product
+estimate); **Galerkin local existence** `galerkin_local_existence` for any linear+quadratic
+ODE `u' = Au + B(u,u)` on a finite-dimensional space (Picard–Lindelöf).
+
 ## Not proved here
+- `SobolevProductEstimate`, `SobolevCommutatorEstimate`, `GalerkinUniformHsBound`,
+  `GalerkinCompactnessLimit` are **named Props, stated but not proved**. The concrete
+  Leray-projected NS Galerkin bilinear form is not constructed; `galerkin_local_existence`
+  is for an abstract `B`. Nothing here proves `PeriodicLocalExistence` or any Clay statement.
 
 - `Lᵖ` strain bounds for `p ≠ 2` (these need Calderón–Zygmund theory, absent from Mathlib).
 - Any statement about existence, uniqueness or regularity of Navier–Stokes solutions.
