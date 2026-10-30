@@ -31,7 +31,7 @@ factor `4π²` absorbed into `ν`.
   `‖e^{tνΔ} f‖²_{H^{s+k}} ≤ k! · e^{2νt} · (2νt)^{-k} · ‖f‖²_{H^s}`.
   Taking `s = 0` covers all of `L²(T³)`. The constant `C = (k! e^{2νt})^{1/2} 2^{-k/2}` is bounded
   for `t` in any bounded interval, which gives `‖e^{tνΔ} f‖_{H^{s+k}} ≤ C (νt)^{-k/2} ‖f‖_{H^s}`.
-  The derivative order `k` is a natural number.
+- `heat_smoothing_real`: the same for every real `k ≥ 0`, with `k!` replaced by `⌈k⌉!`.
 
 **Strain, vorticity, stream function** (`TorusFourierNS/Strain.lean`). For a wave vector `k ∈ ℝ³`
 and velocity mode `û ∈ ℂ³` with `k·û = 0` (divergence free):

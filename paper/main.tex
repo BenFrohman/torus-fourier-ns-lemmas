@@ -1,16 +1,13 @@
 \documentclass[11pt]{article}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[utf8]{inputenc}
 \newtheorem{theorem}{Theorem}\newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{remark}\newtheorem*{commentary}{Commentary}
 \title{Fourier Lemmas on the Three-Torus: Heat Smoothing, the $L^2$ Strain Identity,\\ and the Curl of the Energy Derivative, Formalised in Lean~4}
 \author{Benjamin Stanley Frohman\\ORCID 0009-0006-7068-3718}
 \date{DRAFT --- 30 October 2026}
 \begin{document}\maketitle
-% Drafting plan: the mathematics in every section is taken from the Lean build
-% (TorusFourierNS/*.lean). Commentary blocks carry the author's own narration of how each
-% step grew out of earlier skeletons and mistakes, drawn from his documents, Drive notes,
-% prior builds, blueprints and READMEs. Commentary still to be expanded from those sources
-% is marked TODO-COMMENTARY in this source file only.
+% The mathematics in every section is taken from the Lean build (TorusFourierNS/*.lean).
+% Commentary blocks quote the author's earlier drafts and notes, with the source and date.
 
 \begin{abstract}
 On $\mathbb T^3=(\mathbb R/\mathbb Z)^3$, the product of three circles, we prove in Lean~4 with Mathlib,
@@ -32,15 +29,25 @@ $\|a\|_{\ell^2}^2=\sum|a_n|^2$.\end{proof}
 defines $T_m:L^2\to L^2$ with $\|T_mf\|_2\le\|f\|_2$.\end{lemma}
 \begin{proof} $\sum|m(n)\hat f(n)|^2\le\sum|\hat f(n)|^2<\infty$, so the sequence lies in $\ell^2$;
 pull back by the isometry and apply Parseval.\end{proof}
-\begin{commentary} The torus is three circles, so the Fourier side is already in Mathlib; only
-the Sobolev scale has to be built, and on the torus it is a weighted coefficient sum.
-TODO-COMMENTARY.\end{commentary}
+\begin{commentary} The earlier manuscript already ran the analysis through Fourier coefficients:
+``The Fourier multiplier proof of the Sobolev embedding $H^s(\mathbb T^3,\mathbb R^3)\hookrightarrow
+C^1(\mathbb T^3,\mathbb R^3)$ for $s>5/2$ follows from Parseval's identity and the $p$-series
+convergence'' (\emph{vFinal}, Drive). When this build was planned, the author's point was
+simply: ``the torus is proved to be a Circle (cubic)'' (30 October 2026). $\mathbb T^3$ is three
+circles, so Mathlib's multi-dimensional Fourier series and Parseval apply directly, and the Sobolev
+scale, missing from Mathlib, is defined here as a weighted coefficient sum.\end{commentary}
 
 \section{Heat semigroup}
 \begin{theorem} For $\nu,s,t\ge0$: $\widehat{e^{t\nu\Delta}f}(n)=e^{-\nu|n|^2t}\hat f(n)$,
 $e^{0}=\mathrm{id}$, $e^{s\nu\Delta}e^{t\nu\Delta}=e^{(s+t)\nu\Delta}$, $\|e^{t\nu\Delta}f\|_2\le\|f\|_2$.\end{theorem}
 \begin{proof} The symbol has modulus $\le1$; $e^{-\nu|n|^2s}e^{-\nu|n|^2t}=e^{-\nu|n|^2(s+t)}$ and
 operators with equal coefficients are equal.\end{proof}
+
+\begin{commentary} The local-existence block of the May drafts used exactly this operator:
+``The heat semigroup $e^{\nu t\Delta}$ is bounded on $H^s$ ($s>5/2$) with
+$\|e^{\nu t\Delta}\|_{\mathcal L(H^s)}\le1$'' (\emph{May 16 edits}, Drive). There it was asserted;
+here it is the contraction theorem above, for every $s$, since the symbol has modulus at most one
+at every mode.\end{commentary}
 
 \section{Sobolev smoothing}
 $\|f\|_{H^s}^2=\sum_n(1+|n|^2)^s|\hat f(n)|^2$.
@@ -51,6 +58,14 @@ $e^{t\nu\Delta}f\in H^{s+k}$ and $\|e^{t\nu\Delta}f\|_{H^{s+k}}^2\le k!\,e^{2\nu
 \begin{proof} Mode by mode,
 $(1+|n|^2)^{s+k}e^{-2\nu t|n|^2}|\hat f|^2\le k!e^{2\nu t}(2\nu t)^{-k}(1+|n|^2)^s|\hat f|^2$ by the lemma with
 $a=2\nu t$; sum by comparison.\end{proof}
+\begin{theorem}[\texttt{heat\_smoothing\_real}] The same holds for every real $k\ge0$ with $k!$
+replaced by $\lceil k\rceil!$.\end{theorem}
+\begin{proof} For $y\ge0$, $y^k\le\lceil k\rceil!\,e^y$: if $y\le1$ then $y^k\le1\le e^y$; if $y\ge1$
+then $y^k\le y^{\lceil k\rceil}\le\lceil k\rceil!\,e^y$. The rest is as before.\end{proof}
+\begin{commentary} The v2.4 master draft names this step as indispensable: ``Viscosity is essential
+for local existence in $H^s$, the explicit higher-norm Gronwall estimate, and the final parabolic
+smoothing'' (\emph{NS Global Regularity v2.4 Master}, Drive, 25 May 2026). The drafts invoked the
+smoothing without a statement; the theorem above gives it with an explicit constant.\end{commentary}
 
 \section{Strain and vorticity}
 For $k\in\mathbb R^3$, $\hat u\in\mathbb C^3$, $k\cdot\hat u=0$: $\hat S_{ij}=\pi i(k_i\hat u_j+k_j\hat u_i)$, $\hat\omega=2\pi i\,k\times\hat u$.
@@ -68,12 +83,17 @@ $H(\omega+\varepsilon\eta)=H(\omega)+\varepsilon\,\mathrm{Re}\langle\hat\psi,\et
 $\delta H/\delta\omega=\hat\psi$; and $2\pi i\,k\times\hat\psi=\hat u$, i.e.\ $\mathrm{curl}(\delta H/\delta\omega)=u$.\end{theorem}
 \begin{proof} $k\times(k\times\hat u)=k(k\cdot\hat u)-|k|^2\hat u=-|k|^2\hat u$, so
 $(2\pi i)^2k\times(k\times\hat u)/(4\pi^2|k|^2)=\hat u$. The expansion is the polarisation of a real quadratic form.\end{proof}
-\begin{commentary} In the tether build the derivative $\delta H/\delta\omega$ was an abstract
-choice, and the $\psi$-slot tether failed energy degeneracy because $\delta H/\delta\omega$ is $\psi$, not $u$.
-Here, in concrete Fourier variables, the identity the velocity-slot tether needs is a theorem.
-TODO-COMMENTARY.\end{commentary}
+\begin{commentary} The original degeneracy argument read: ``2. $\delta H/\delta\omega = u =$
+Biot--Savart $\omega$. 3. By definition of $\Pi_u$ we have $\Pi_u(u)=0$'' (\emph{Tether\_May31.lean},
+Drive), and the May drafts wrote ``$\delta H/\delta\mu=u$ (Biot--Savart recovery, Coulomb gauge)''
+(\emph{May 16 edits}). Formalising it exposed the slip: as a functional of vorticity, the derivative
+of the kinetic energy is the stream function $\psi$, not $u$, and the $\psi$-slot tether failed energy
+degeneracy for that reason. The repair was to put the curl into the tether slot, so that what it
+needs is $\mathrm{curl}(\delta H/\delta\omega)=u$. In the tether build that identity was a hypothesis,
+because the derivative there is abstract. In Fourier variables it is the theorem above: the earlier
+statement becomes true once the curl is put back in.\end{commentary}
 
 \section{Scope}
-Only $p=2$ strain bounds and integer smoothing orders are proved. Nothing here concerns
+Only $p=2$ strain bounds are proved. Nothing here concerns
 existence or regularity of Navier--Stokes solutions.
 \end{document}

@@ -119,4 +119,78 @@ theorem heat_smoothing {ν t : ℝ} (hν : 0 < ν) (ht : 0 < t) (s : ℝ) (k : �
   rw [← tsum_mul_left]
   exact hsum.tsum_le_tsum hpt (hf.mul_left K)
 
+/-- `y^k ≤ ⌈k⌉! e^y` for real `k ≥ 0`, `y ≥ 0`. -/
+lemma rpow_le_factorial_ceil_mul_exp {k y : ℝ} (hk : 0 ≤ k) (hy : 0 ≤ y) :
+    y ^ k ≤ (Nat.ceil k).factorial * Real.exp y := by
+  have hf : (1 : ℝ) ≤ (Nat.ceil k).factorial := by exact_mod_cast (Nat.ceil k).factorial_pos
+  have he : 1 ≤ Real.exp y := Real.one_le_exp hy
+  rcases le_total y 1 with h | h
+  · calc y ^ k ≤ 1 := Real.rpow_le_one hy h hk
+      _ ≤ (Nat.ceil k).factorial * Real.exp y := by nlinarith
+  · calc y ^ k ≤ y ^ ((Nat.ceil k : ℕ) : ℝ) := Real.rpow_le_rpow_of_exponent_le h (Nat.le_ceil k)
+      _ = y ^ (Nat.ceil k) := Real.rpow_natCast y _
+      _ ≤ (Nat.ceil k).factorial * Real.exp y := by
+        have := Real.pow_div_factorial_le_exp (x := y) hy (Nat.ceil k)
+        have hp : (0 : ℝ) < (Nat.ceil k).factorial := by exact_mod_cast (Nat.ceil k).factorial_pos
+        rw [div_le_iff₀ hp] at this; linarith
+
+/-- Real-exponent version of `one_add_pow_mul_exp_le`. -/
+lemma one_add_rpow_mul_exp_le {k a x : ℝ} (hk : 0 ≤ k) (ha : 0 < a) (hx : 0 ≤ x) :
+    (1 + x) ^ k * Real.exp (-(a * x)) ≤ (Nat.ceil k).factorial * Real.exp a / a ^ k := by
+  have h1 : 0 < 1 + x := by linarith
+  have h := rpow_le_factorial_ceil_mul_exp hk (by positivity : 0 ≤ a * (1 + x))
+  rw [Real.mul_rpow ha.le h1.le] at h
+  have hak : 0 < a ^ k := Real.rpow_pos_of_pos ha k
+  rw [le_div_iff₀ hak]
+  have he : Real.exp (-(a * x)) = Real.exp a * Real.exp (-(a * (1 + x))) := by
+    rw [← Real.exp_add]; congr 1; ring
+  have he2 : Real.exp (a * (1 + x)) * Real.exp (-(a * (1 + x))) = 1 := by
+    rw [← Real.exp_add]; simp
+  rw [he]
+  have hpos : 0 < Real.exp (-(a * (1 + x))) := Real.exp_pos _
+  calc (1 + x) ^ k * (Real.exp a * Real.exp (-(a * (1 + x)))) * a ^ k
+      = Real.exp a * Real.exp (-(a * (1 + x))) * (a ^ k * (1 + x) ^ k) := by ring
+    _ ≤ Real.exp a * Real.exp (-(a * (1 + x))) *
+          ((Nat.ceil k).factorial * Real.exp (a * (1 + x))) := by gcongr
+    _ = (Nat.ceil k).factorial * Real.exp a := by
+        rw [show Real.exp a * Real.exp (-(a * (1 + x))) *
+            ((Nat.ceil k).factorial * Real.exp (a * (1 + x)))
+          = Real.exp a * (Nat.ceil k).factorial *
+            (Real.exp (a * (1 + x)) * Real.exp (-(a * (1 + x)))) by ring, he2]; ring
+
+/-- **Parabolic smoothing, real gain.** For `ν, t > 0`, real `s`, real `k ≥ 0` and `f ∈ H^s`,
+`e^{tνΔ} f ∈ H^{s+k}` and
+`‖e^{tνΔ} f‖²_{H^{s+k}} ≤ ⌈k⌉! e^{2νt} (2νt)^{-k} ‖f‖²_{H^s}`. -/
+theorem heat_smoothing_real {ν t : ℝ} (hν : 0 < ν) (ht : 0 < t) (s : ℝ) {k : ℝ} (hk : 0 ≤ k)
+    (f : L2T3) (hf : InHs s f) :
+    InHs (s + k) (heat hν.le ht.le f) ∧
+      HsSq (s + k) (heat hν.le ht.le f) ≤
+        (Nat.ceil k).factorial * Real.exp (2 * ν * t) / (2 * ν * t) ^ k * HsSq s f := by
+  set K := ((Nat.ceil k).factorial : ℝ) * Real.exp (2 * ν * t) / (2 * ν * t) ^ k
+  have ha : 0 < 2 * ν * t := by positivity
+  have hpt : ∀ n, (1 + nsq n) ^ (s + k) * ‖coeff (heat hν.le ht.le f) n‖ ^ 2 ≤
+      K * ((1 + nsq n) ^ s * ‖coeff f n‖ ^ 2) := by
+    intro n
+    have hx := nsq_nonneg n
+    have h1 : 0 < 1 + nsq n := by linarith
+    rw [coeff_heat, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _),
+      Real.rpow_add h1, mul_pow, ← Real.exp_nat_mul]
+    have key := one_add_rpow_mul_exp_le hk ha hx
+    have hexp : Real.exp (((2 : ℕ) : ℝ) * -(ν * nsq n * t)) = Real.exp (-(2 * ν * t * nsq n)) := by
+      congr 1; push_cast; ring
+    rw [hexp]
+    have hs0 : 0 ≤ (1 + nsq n) ^ s := Real.rpow_nonneg h1.le _
+    calc (1 + nsq n) ^ s * (1 + nsq n) ^ k * (Real.exp (-(2 * ν * t * nsq n)) * ‖coeff f n‖ ^ 2)
+        = ((1 + nsq n) ^ k * Real.exp (-(2 * ν * t * nsq n))) * ((1 + nsq n) ^ s * ‖coeff f n‖ ^ 2)
+          := by ring
+      _ ≤ K * ((1 + nsq n) ^ s * ‖coeff f n‖ ^ 2) := by gcongr
+  have hnn : ∀ n, 0 ≤ (1 + nsq n) ^ (s + k) * ‖coeff (heat hν.le ht.le f) n‖ ^ 2 := fun n => by
+    have := nsq_nonneg n; positivity
+  have hsum : InHs (s + k) (heat hν.le ht.le f) :=
+    Summable.of_nonneg_of_le hnn hpt (hf.mul_left K)
+  refine ⟨hsum, ?_⟩
+  unfold HsSq
+  rw [← tsum_mul_left]
+  exact hsum.tsum_le_tsum hpt (hf.mul_left K)
+
 end TorusFourierNS

@@ -1,0 +1,100 @@
+{
+  "tool": {
+    "name": "titan-audit",
+    "version": "1.0.0",
+    "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
+    "doi": "10.5281/zenodo.23630648"
+  },
+  "project": {
+    "path": "/workspace/torus-fourier-ns-lemmas",
+    "name": "torus-fourier-ns-lemmas",
+    "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
+    "git_head": "c18f2e1d5d9f9832af3c6ab95c06600d5bbbff49"
+  },
+  "build": {
+    "requested": false
+  },
+  "axiom_audit": {
+    "ran": true,
+    "exit_code": 0,
+    "errors": [],
+    "modules": 4,
+    "theorems": 47,
+    "clean_theorems": 47,
+    "nonstandard": [],
+    "per_module": {
+      "TorusFourierNS.Basic": {
+        "theorems": 11,
+        "nonstandard": 0
+      },
+      "TorusFourierNS.Heat": {
+        "theorems": 19,
+        "nonstandard": 0
+      },
+      "TorusFourierNS.Strain": {
+        "theorems": 17,
+        "nonstandard": 0
+      }
+    }
+  },
+  "source_scan": {
+    "forbidden": [],
+    "vacuity_heuristics": [],
+    "counts": {}
+  },
+  "tree": {
+    "sha256": "67d35205bc42829a52da474470c5f896476bb44245dd62c437335daa63f5e1b1",
+    "files": 9,
+    "entries": [
+      {
+        "path": "AxiomAudit.lean",
+        "sha256": "7bccf5128b8b91f6e51dd8027c8667f3a7eae06d630bcc8a7b031fda69909b92"
+      },
+      {
+        "path": "TorusFourierNS.lean",
+        "sha256": "757fb090d07654c251bfe4bb2efae436db061f0c74a611a31077706e4db50df6"
+      },
+      {
+        "path": "TorusFourierNS/Basic.lean",
+        "sha256": "9f3707a1bd1adccd0e205f8384cde6a12afadcb1297298ad1cdafd2fbe91626f"
+      },
+      {
+        "path": "TorusFourierNS/Heat.lean",
+        "sha256": "63ae1a0c24abe91c83c08390243a5850c715d20bd84057a7015f31ca583dfb90"
+      },
+      {
+        "path": "TorusFourierNS/Strain.lean",
+        "sha256": "b2e7467dd5061852feed5b8b473c9e7beb6ad57d097667a68ea11c95da1c92a2"
+      },
+      {
+        "path": "lake-manifest.json",
+        "sha256": "38b4863ea67ebf741846f29b7e9f6ac015ed1b2d87f07b8631a1c02217623af4"
+      },
+      {
+        "path": "lakefile.lean",
+        "sha256": "b530f53ce1fd918468e38a18997894dc1b58ea01fc9915f54d2117dcc53ae6ef"
+      },
+      {
+        "path": "lean-toolchain",
+        "sha256": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76"
+      },
+      {
+        "path": "tmpge68clls.lean",
+        "sha256": "32c6b5aefc1dff52c5b31839eed4a73c010a628855d500592a2d36c2eeec5727"
+      }
+    ],
+    "method": "sha256 of 'sha256  path\\n' lines, sorted by path, over *.lean (excluding .lake/.git) + lakefile/manifest/toolchain"
+  },
+  "verdict": {
+    "status": "PASS",
+    "reasons": [],
+    "vacuity_warnings_in_build": 0
+  },
+  "generated_at_utc": "2026-10-30T10:46:31+00:00",
+  "signature": {
+    "alg": "ed25519",
+    "public_key_b64": "YoEHEghXFxrXvYKQoWQb+oDunzwdxBgpk03gxrdC7WI=",
+    "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
+    "value_b64": "bF4ciOleUU9jjduKmmRWBFItbUEaDowW7L37nd8HdmjfzW5d+uTJDjVwC8KldcJV9T/6ty+o5Jf8zA5tRM8vDw=="
+  }
+}
