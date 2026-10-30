@@ -10,3 +10,4 @@ import TorusFourierNS.FconvSummable
 import TorusFourierNS.GalerkinEnergy
 import TorusFourierNS.TransportBound
 import TorusFourierNS.GalerkinStructure
+import TorusFourierNS.GalerkinContinuation
