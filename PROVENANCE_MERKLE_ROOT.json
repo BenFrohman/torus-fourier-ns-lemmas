@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "repository": "torus-fourier-ns-lemmas",
+  "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
+  "license": "Apache-2.0",
+  "technologies": {
+    "titan_audit_doi": "10.5281/zenodo.23630648",
+    "sealguard_doi": "10.5281/zenodo.23631670",
+    "sentinel_gate_doi": "10.5281/zenodo.23632766"
+  },
+  "merkle_root_sha256": "fcbe657a0a3d6090b8b86933e93345f84416141918c55cee90e9ba5616d496c8",
+  "sentinel_gate_receipt": {
+    "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
+    "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
+    "action_type": "seal_and_attest_public_release",
+    "action_id": "fcbe657a0a3d6090b8b86933e93345f84416141918c55cee90e9ba5616d496c8",
+    "permitted": true,
+    "reason": "PERMITTED_DETERMINISTIC_POLICY",
+    "receipt_sha256": "d76580471d7bf8c7a474f7ac7c239ff5fa3504e11ccf0ae293ec998f87a3cbc5"
+  },
+  "files": {
+    ".gitignore": {
+      "sha256": "a191db30dd6cce3693528aa0dea5389d783f578194cd3ae9c216cda0634aba4e",
+      "bytes": 51
+    },
+    "AxiomAudit.lean": {
+      "sha256": "7bccf5128b8b91f6e51dd8027c8667f3a7eae06d630bcc8a7b031fda69909b92",
+      "bytes": 1404
+    },
+    "LICENSE": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "README.md": {
+      "sha256": "3e8f9f99dad5045be2b0f1ca74db7ee2ae57a19c835271b8e2ffdc69fe844948",
+      "bytes": 4089
+    },
+    "TorusFourierNS/Basic.lean": {
+      "sha256": "9f3707a1bd1adccd0e205f8384cde6a12afadcb1297298ad1cdafd2fbe91626f",
+      "bytes": 3824
+    },
+    "TorusFourierNS/Heat.lean": {
+      "sha256": "63ae1a0c24abe91c83c08390243a5850c715d20bd84057a7015f31ca583dfb90",
+      "bytes": 10280
+    },
+    "TorusFourierNS/Strain.lean": {
+      "sha256": "b2e7467dd5061852feed5b8b473c9e7beb6ad57d097667a68ea11c95da1c92a2",
+      "bytes": 8766
+    },
+    "TorusFourierNS.lean": {
+      "sha256": "757fb090d07654c251bfe4bb2efae436db061f0c74a611a31077706e4db50df6",
+      "bytes": 84
+    },
+    "audit/TITAN_AUDIT_CERTIFICATE.json": {
+      "sha256": "f72f42e78c35eca097a77752f7a2f04eb03e83ca7157566837b48518eabb1bf3",
+      "bytes": 2993
+    },
+    "audit/TITAN_AUDIT_REPORT.md": {
+      "sha256": "ad474fbde2903ece68e1be639e6c8ba9f56c018e1c30f09229d4fc15b6e005fb",
+      "bytes": 1017
+    },
+    "audit/report.json": {
+      "sha256": "f72f42e78c35eca097a77752f7a2f04eb03e83ca7157566837b48518eabb1bf3",
+      "bytes": 2993
+    },
+    "audit/report.md": {
+      "sha256": "ad474fbde2903ece68e1be639e6c8ba9f56c018e1c30f09229d4fc15b6e005fb",
+      "bytes": 1017
+    },
+    "ip_pipeline/seal_and_verify.py": {
+      "sha256": "77864093021cdf5a80124ac294842fd09bdd8b9adc5a54af329db0c290ffa6e6",
+      "bytes": 7477
+    },
+    "lake-manifest.json": {
+      "sha256": "38b4863ea67ebf741846f29b7e9f6ac015ed1b2d87f07b8631a1c02217623af4",
+      "bytes": 3229
+    },
+    "lakefile.lean": {
+      "sha256": "b530f53ce1fd918468e38a18997894dc1b58ea01fc9915f54d2117dcc53ae6ef",
+      "bytes": 236
+    },
+    "lean-toolchain": {
+      "sha256": "1098ca8368e0db12138f33b070187e1f6527984ae0451a587b20e3e661f96a76",
+      "bytes": 29
+    },
+    "paper/main.pdf": {
+      "sha256": "4075e77faa591acf15968150935c98cd6f9775f71ebf19f6da963fb4ca7ef1f7",
+      "bytes": 75054
+    },
+    "paper/main.tex": {
+      "sha256": "c8d72d2a7a317843226b27475380a9a1cb5b3ad2f8ed6c1aac8fb3801dbdf92e",
+      "bytes": 7386
+    },
+    "tmpge68clls.lean": {
+      "sha256": "32c6b5aefc1dff52c5b31839eed4a73c010a628855d500592a2d36c2eeec5727",
+      "bytes": 741
+    }
+  }
+}
