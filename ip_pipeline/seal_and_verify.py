@@ -56,7 +56,9 @@ def collect_tracked_files() -> dict[str, dict]:
     out = {}
     skip_dirs = {".git", ".lake", "build", "__pycache__"}
     skip_files = {"PROVENANCE_MERKLE_ROOT.json", "audit/SEALGUARD_CLASSIFIED_MANIFEST.json"}
-    for p in sorted(REPO_ROOT.rglob("*")):
+    import subprocess
+    tracked = subprocess.run(["git", "ls-files", "-z"], cwd=REPO_ROOT, capture_output=True, check=True).stdout.decode().split("\0")
+    for p in sorted(REPO_ROOT / t for t in tracked if t):
         if not p.is_file():
             continue
         rel = p.relative_to(REPO_ROOT).as_posix()

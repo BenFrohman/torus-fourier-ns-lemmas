@@ -8,15 +8,15 @@
     "sealguard_doi": "10.5281/zenodo.23631670",
     "sentinel_gate_doi": "10.5281/zenodo.23632766"
   },
-  "merkle_root_sha256": "fcbe657a0a3d6090b8b86933e93345f84416141918c55cee90e9ba5616d496c8",
+  "merkle_root_sha256": "d44bd1f9a052e1fc05e23c7f214c24c84920fe02c3f525b360c3d9d386326e78",
   "sentinel_gate_receipt": {
     "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
     "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
     "action_type": "seal_and_attest_public_release",
-    "action_id": "fcbe657a0a3d6090b8b86933e93345f84416141918c55cee90e9ba5616d496c8",
+    "action_id": "d44bd1f9a052e1fc05e23c7f214c24c84920fe02c3f525b360c3d9d386326e78",
     "permitted": true,
     "reason": "PERMITTED_DETERMINISTIC_POLICY",
-    "receipt_sha256": "d76580471d7bf8c7a474f7ac7c239ff5fa3504e11ccf0ae293ec998f87a3cbc5"
+    "receipt_sha256": "c3b35d17cf95516ae8d38107306c2643b1233c784af44cbef302b0bcb8d7efba"
   },
   "files": {
     ".gitignore": {
@@ -68,8 +68,8 @@
       "bytes": 1017
     },
     "ip_pipeline/seal_and_verify.py": {
-      "sha256": "77864093021cdf5a80124ac294842fd09bdd8b9adc5a54af329db0c290ffa6e6",
-      "bytes": 7477
+      "sha256": "068778b54560ca539e2cada7df4db80272abc58859f9dca8f30ab4265fdf2f17",
+      "bytes": 7646
     },
     "lake-manifest.json": {
       "sha256": "38b4863ea67ebf741846f29b7e9f6ac015ed1b2d87f07b8631a1c02217623af4",
