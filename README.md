@@ -177,3 +177,19 @@ ODE uniqueness (`ode_unique_Icc`)). Also `hermitian_extendG_restrictG` and
 
 **Still NOT proved (named Props):** `SobolevCommutatorEstimate`. Coined names: `restrictG`, `HermitianField`, `barrierTime`,
 `GalerkinHsEnergyInequality`, `GalerkinTransportBound`.
+
+## Galerkin continuation (added)
+
+`TorusFourierNS/GalerkinContinuation.lean`, **proved** (no extra hypotheses):
+
+* `galerkinNS_continuation_of_normBound`: if every solution of the Galerkin NS ODE from `x₀`
+  on any `[0,T'] ⊆ [0,T]` stays in the sup-norm ball of radius `R`, a solution exists on all of
+  `[0,T]`. The proof clamps the field outside a ball, applies Mathlib's Picard–Lindelöf on
+  `[-1,T+1]`, and uses real induction to show the solution never leaves the ball.
+* `norm_le_hsNormField_mul`, `galerkinNS_continuation_of_hsBound`: the same result with an
+  `H^s` a priori bound.
+
+Coined names: `clampC`, `clampG`, `clamp_real_abs`, `clampC_dist_le`, `clampC_norm_le`,
+`clampC_of_norm_le`, `clampG_dist_le`, `clampG_norm_le`, `clampG_of_norm_le`,
+`galerkinNS_continuation_of_normBound`, `hsBoxConst`, `hsBoxConst_nonneg`,
+`norm_le_hsNormField_mul`, `galerkinNS_continuation_of_hsBound`.
