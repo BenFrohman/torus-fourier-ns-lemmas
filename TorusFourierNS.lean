@@ -8,3 +8,4 @@ import TorusFourierNS.SobolevProduct
 import TorusFourierNS.GalerkinNS
 import TorusFourierNS.FconvSummable
 import TorusFourierNS.GalerkinEnergy
+import TorusFourierNS.TransportBound

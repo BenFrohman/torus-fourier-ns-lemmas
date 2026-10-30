@@ -143,7 +143,25 @@ Copyright 2026 Benjamin Stanley Frohman (ORCID 0009-0006-7068-3718). Apache-2.0.
   from the truncation of `a ∈ H^s` that stays Hermitian and divergence-free satisfies
   `‖u_N‖²_{H^s} ≤ ‖a‖²_{H^s}+1` on `[0, barrierTime C ‖a‖²]`, uniformly in `N`.
 
-**NOT proved (named Props):** `GalerkinTransportBound s C` (transport cancellation plus a
-Kato–Ponce commutator bound; this is the analytic core of the estimate) and, as before,
-`SobolevCommutatorEstimate`. Coined names: `restrictG`, `HermitianField`, `barrierTime`,
+### Transport bound (`TorusFourierNS/TransportBound.lean`)
+
+**Proved, for `s > 5/2` only:**
+- `galerkinTransportBound_of_gt`: `GalerkinTransportBound s (transportConst s)`. For every `N` and
+  every Galerkin state whose extension is Hermitian and divergence-free,
+  `-Re⟨u, P_N(u·∇u)⟩_{H^s} ≤ C ‖u‖³_{H^s}`. The proof: Leray projection drops out of the pairing;
+  the symmetric-weight trilinear sum vanishes exactly (transport cancellation, `triTerm_sym_cancel`);
+  the weight commutator obeys `|j||σ(m+j)-σ(j)| ≤ K(⟨m⟩σ_j+σ_m⟨j⟩)` (`weight_commutator_le`,
+  needs `s ≥ 2`); a finite Young inequality (`young_box`); and `Σ⟨m⟩|u_m| ≤ √S ‖u‖_{H^s}` with
+  `S = Σ' ⟨k⟩^{-2(s-1)}`, which is finite only for `s > 5/2`.
+- `galerkinHsEnergyInequality_of_gt`: `GalerkinHsEnergyInequality ν s (transportConst s)` for `ν ≥ 0`.
+- `galerkin_uniform_bound_of_gt`: the uniform-in-`N` bound `‖u_N(t)‖² ≤ ‖a‖²+1` on
+  `[0, barrierTime (transportConst s) ‖a‖²]`. It is still **conditional on the Galerkin solution
+  staying Hermitian and divergence-free** (hypothesis `hstruct`).
+
+The range `3/2 < s ≤ 5/2` is not covered. Coined names in this file: `nrm`, `br`, `sig`, `kpConst`,
+`weight_commutator_le`, `young_box`, `triDom`, `triTerm`, `triTerm_sym_cancel`, `preTerm`, `aC`,
+`transportConst`, `galerkinTransportBound_of_gt`, `galerkinHsEnergyInequality_of_gt`,
+`galerkin_uniform_bound_of_gt`.
+
+**Still NOT proved (named Props):** `SobolevCommutatorEstimate`. Coined names: `restrictG`, `HermitianField`, `barrierTime`,
 `GalerkinHsEnergyInequality`, `GalerkinTransportBound`.
