@@ -6,3 +6,5 @@ import TorusFourierNS.FieldBiotSavart
 import TorusFourierNS.SobolevField
 import TorusFourierNS.SobolevProduct
 import TorusFourierNS.GalerkinNS
+import TorusFourierNS.FconvSummable
+import TorusFourierNS.GalerkinEnergy
