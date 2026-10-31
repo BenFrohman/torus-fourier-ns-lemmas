@@ -193,3 +193,18 @@ Coined names: `clampC`, `clampG`, `clamp_real_abs`, `clampC_dist_le`, `clampC_no
 `clampC_of_norm_le`, `clampG_dist_le`, `clampG_norm_le`, `clampG_of_norm_le`,
 `galerkinNS_continuation_of_normBound`, `hsBoxConst`, `hsBoxConst_nonneg`,
 `norm_le_hsNormField_mul`, `galerkinNS_continuation_of_hsBound`.
+
+## Tame transport bound (added, `TorusFourierNS/TameTransport.lean`)
+
+**Proved** (no extra assumptions beyond those stated):
+* `galerkinTameTransportBound_of_gt (5/2 < s₀) (2 ≤ s)`: for Hermitian, divergence-free Galerkin
+  fields, the `H^s` transport pairing is at most `tameConst s₀ s · ‖v‖_{H^{s₀}} · ‖v‖²_{H^s}`.
+  The bound is tame: it is linear in the top norm `‖v‖²_{H^s}`.
+* `galerkinTameEnergyInequality_of_gt (0 ≤ ν)`: the matching tame energy inequality.
+* `galerkin_hs_propagation` (Grönwall): suppose a Galerkin solution on `[0,T]` stays Hermitian
+  and divergence-free with `‖α t‖_{H^{s₀}} ≤ A`. Then for every `s ≥ 2` it satisfies
+  `‖α t‖²_{H^s} ≤ ‖α 0‖²_{H^s} · exp(tameConst s₀ s · A · t)`.
+
+These are Galerkin (finite-mode) statements only. Coined names: `tameConst`,
+`GalerkinTameTransportBound`, `GalerkinTameEnergyInequality`, `tameConst_nonneg` and the
+theorems above.
