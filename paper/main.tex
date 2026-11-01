@@ -5,7 +5,7 @@
 \theoremstyle{remark}\newtheorem*{commentary}{Commentary}
 \title{Fourier Lemmas on the Three-Torus: Heat Smoothing, the $L^2$ Strain Identity,\\ and the Curl of the Energy Derivative, Formalised in Lean~4}
 \author{Benjamin Stanley Frohman\\ORCID 0009-0006-7068-3718}
-\date{DRAFT --- 30 October 2026}
+\date{DRAFT --- revised 1 November 2026 (not peer reviewed)}
 \begin{document}\maketitle
 % The mathematics in every section is taken from the Lean build (TorusFourierNS/*.lean).
 % Commentary blocks quote the author's earlier drafts and notes, with the source and date.
@@ -16,7 +16,12 @@ with no \texttt{sorry} and only the standard axioms: the heat semigroup is the F
 $e^{-\nu|n|^2t}$, obeys the semigroup law and contracts $L^2$; it maps $H^s$ to $H^{s+k}$ with
 $\|e^{t\nu\Delta}f\|_{H^{s+k}}^2\le k!\,e^{2\nu t}(2\nu t)^{-k}\|f\|_{H^s}^2$; for divergence-free
 velocity fields $\|S\|_2^2=\tfrac12\|\omega\|_2^2$; and the kinetic energy, viewed as a function of
-vorticity, has derivative the stream function, whose curl is the velocity.
+vorticity, has derivative the stream function, whose curl is the velocity. For the finite-mode Galerkin truncation we further prove local existence,
+preservation of the Hermitian and divergence-free structure, an $H^s$ transport bound for $s>5/2$,
+a uniform-in-$N$ short-time bound, a tame Gr\"onwall propagation estimate, and continuation under an
+a~priori bound. The full build (14 modules, 250 theorems) uses no \texttt{sorry} and only the standard
+axioms. These are Galerkin (finite-mode) and Fourier statements; nothing here proves existence or regularity
+of Navier--Stokes solutions, and the Clay Millennium problem remains open.
 \end{abstract}
 
 \section{Setting}
@@ -33,7 +38,7 @@ pull back by the isometry and apply Parseval.\end{proof}
 \begin{commentary} The earlier manuscript already ran the analysis through Fourier coefficients:
 ``The Fourier multiplier proof of the Sobolev embedding $H^s(\mathbb T^3,\mathbb R^3)\hookrightarrow
 C^1(\mathbb T^3,\mathbb R^3)$ for $s>5/2$ follows from Parseval's identity and the $p$-series
-convergence'' (\emph{vFinal}, Drive). When this build was planned, the author's point was
+convergence'' (\emph{vFinal}, author's unpublished draft). When this build was planned, the author's point was
 simply: ``the torus is proved to be a Circle (cubic)'' (30 October 2026). $\mathbb T^3$ is three
 circles, so Mathlib's multi-dimensional Fourier series and Parseval apply directly, and the Sobolev
 scale, missing from Mathlib, is defined here as a weighted coefficient sum.\end{commentary}
@@ -46,7 +51,7 @@ operators with equal coefficients are equal.\end{proof}
 
 \begin{commentary} The local-existence block of the May drafts used exactly this operator:
 ``The heat semigroup $e^{\nu t\Delta}$ is bounded on $H^s$ ($s>5/2$) with
-$\|e^{\nu t\Delta}\|_{\mathcal L(H^s)}\le1$'' (\emph{May 16 edits}, Drive). There it was asserted;
+$\|e^{\nu t\Delta}\|_{\mathcal L(H^s)}\le1$'' (\emph{May 16 edits}, author's unpublished draft). There it was asserted;
 here it is the contraction theorem above, for every $s$, since the symbol has modulus at most one
 at every mode.\end{commentary}
 
@@ -65,7 +70,7 @@ replaced by $\lceil k\rceil!$.\end{theorem}
 then $y^k\le y^{\lceil k\rceil}\le\lceil k\rceil!\,e^y$. The rest is as before.\end{proof}
 \begin{commentary} The v2.4 master draft names this step as indispensable: ``Viscosity is essential
 for local existence in $H^s$, the explicit higher-norm Gronwall estimate, and the final parabolic
-smoothing'' (\emph{NS Global Regularity v2.4 Master}, Drive, 25 May 2026). The drafts invoked the
+smoothing'' (\emph{NS Global Regularity v2.4 Master}, author's unpublished draft, 25 May 2026). The drafts invoked the
 smoothing without a statement; the theorem above gives it with an explicit constant.\end{commentary}
 
 \section{Strain and vorticity}
@@ -86,7 +91,7 @@ $\delta H/\delta\omega=\hat\psi$; and $2\pi i\,k\times\hat\psi=\hat u$, i.e.\ $\
 $(2\pi i)^2k\times(k\times\hat u)/(4\pi^2|k|^2)=\hat u$. The expansion is the polarisation of a real quadratic form.\end{proof}
 \begin{commentary} The original degeneracy argument read: ``2. $\delta H/\delta\omega = u =$
 Biot--Savart $\omega$. 3. By definition of $\Pi_u$ we have $\Pi_u(u)=0$'' (\emph{Tether\_May31.lean},
-Drive), and the May drafts wrote ``$\delta H/\delta\mu=u$ (Biot--Savart recovery, Coulomb gauge)''
+author's unpublished draft), and the May drafts wrote ``$\delta H/\delta\mu=u$ (Biot--Savart recovery, Coulomb gauge)''
 (\emph{May 16 edits}). Formalising it exposed the slip: as a functional of vorticity, the derivative
 of the kinetic energy is the stream function $\psi$, not $u$, and the $\psi$-slot tether failed energy
 degeneracy for that reason. The repair was to put the curl into the tether slot, so that what it
@@ -94,7 +99,28 @@ needs is $\mathrm{curl}(\delta H/\delta\omega)=u$. In the tether build that iden
 because the derivative there is abstract. In Fourier variables it is the theorem above: the earlier
 statement becomes true once the curl is put back in.\end{commentary}
 
-\section{Scope}
-Only $p=2$ strain bounds are proved. Nothing here concerns
-existence or regularity of Navier--Stokes solutions.
+\section{Galerkin truncation (finite-mode results)}
+On the mode box $|k_i|\le N$ the truncated system is a finite-dimensional ODE. Kernel-checked:
+\begin{itemize}
+\item \texttt{sobolevProductEstimate}: for $s>3/2$, $\|fg\|_{H^s}\lesssim\|f\|_{H^s}\|g\|_{H^s}$ with an explicit constant; \texttt{summable\_fconv\_inner}: the convolution series converges absolutely for $f,g\in H^s$, $s\ge0$.
+\item \texttt{galerkinNS\_local\_existence} (Picard--Lindel\"of) and \texttt{galerkinNS\_structure\_Icc}: Hermitian, divergence-free data stay so on the existence interval.
+\item \texttt{galerkinTransportBound\_of\_gt}: for $s>5/2$, $-\mathrm{Re}\langle u,P_N(u\cdot\nabla u)\rangle_{H^s}\le C\|u\|_{H^s}^3$ uniformly in $N$; \texttt{galerkin\_uniform\_bound\_of\_gt}: $\|u_N(t)\|_{H^s}^2\le\|a\|_{H^s}^2+1$ on $[0,\texttt{barrierTime}]$, uniformly in $N$, for Hermitian divergence-free Galerkin solutions.
+\item \texttt{galerkinTameTransportBound\_of\_gt} and \texttt{galerkin\_hs\_propagation}: if $\|u_N\|_{H^{s_0}}\le A$ ($s_0>5/2$) on $[0,T]$ then $\|u_N(t)\|_{H^s}^2\le\|u_N(0)\|_{H^s}^2e^{CAt}$ for $s\ge2$.
+\item \texttt{galerkinNS\_continuation\_of\_hsBound}: an $H^s$ a~priori bound on $[0,T]$ gives a Galerkin solution on all of $[0,T]$.
+\end{itemize}
+
+\section{Build status, conditional inputs and scope}
+\textbf{Proved.} \texttt{lake build} of all 14 modules of \texttt{TorusFourierNS} succeeds; the axiom
+report (\texttt{AxiomReport.lean}, listed in \texttt{AXIOMS.md}) finds 250 theorems, none using
+\texttt{sorryAx}, and no axiom beyond \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}.
+This is a machine check of the Lean statements, not peer review.
+
+\textbf{Conditional.} Results whose hypotheses are not discharged here: the a~priori bounds in
+\texttt{galerkin\_hs\_propagation} and \texttt{galerkinNS\_continuation\_of\_hsBound}. The named
+propositions \texttt{SobolevCommutatorEstimate}, \texttt{GalerkinUniformHsBound} (for all times) and
+\texttt{GalerkinCompactnessLimit} are stated but not proved.
+
+\textbf{Open.} The range $3/2<s\le5/2$ of the transport bound; passage from Galerkin solutions to
+solutions of the Navier--Stokes equations; $L^p$ strain bounds for $p\ne2$; and global existence or
+regularity of 3D Navier--Stokes, which this work does not address.
 \end{document}

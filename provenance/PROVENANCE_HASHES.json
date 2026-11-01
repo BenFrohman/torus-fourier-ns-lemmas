@@ -6,7 +6,7 @@
     "doi": "10.5281/zenodo.23630648"
   },
   "project": {
-    "path": "/workspace/torus-fourier-ns-lemmas",
+    "path": ".",
     "name": "torus-fourier-ns-lemmas",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
     "git_head": "c18f2e1d5d9f9832af3c6ab95c06600d5bbbff49"
