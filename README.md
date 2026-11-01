@@ -10,6 +10,12 @@ Conventions: `mFourier n x = e^{2πi n·x}`, so `∂ⱼ` acts on mode `n` by `2�
 the measure is the normalised Haar measure; the heat symbol is written `e^{-ν|n|²t}` with the
 factor `4π²` absorbed into `ν`.
 
+## Status summary
+
+- **Proved** (kernel-checked, standard axioms only: `propext`, `Classical.choice`, `Quot.sound`): the Fourier-side lemmas listed under "Proved" and the "(added)" sections below: Sobolev product, Galerkin energy, Galerkin continuation and tame transport bounds. The per-theorem list is in `AXIOMS.md`.
+- **Conditional on**: results that take explicit hypotheses or named `Prop` inputs are only as strong as those inputs. These are the structural hypothesis `hstruct`, `SobolevCommutatorEstimate`, `GalerkinUniformHsBound`, `GalerkinCompactnessLimit`, and the a-priori bound hypotheses stated in the theorem signatures. None of them is proved here.
+- **Open**: everything under "Not proved here", including global regularity of 3D Navier–Stokes. This repo does not solve the Clay Millennium problem, and nothing here has been peer reviewed.
+
 ## Proved
 
 **Fourier setup** (`TorusFourierNS/Basic.lean`), unconditional:
@@ -214,3 +220,6 @@ theorems above.
 Copyright 2026 Benjamin Stanley Frohman (ORCID [0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718)). Licensed under the Apache License, Version 2.0; see `LICENSE` and `NOTICE`.
 
 What is proved vs. conditional: Results under "Proved" and the added sections are kernel-checked; items under "Not proved here" are not proved. Every hypothesis is a named `Prop` passed as an explicit argument. Nothing in this repository claims to solve the Clay Millennium problem or global regularity for unmodified 3D Navier–Stokes.
+
+
+**PDF note:** the PDF in `paper/` predates the 2026-11-01 revision of the `.tex` source (no TeX toolchain was available when this revision was made). The `.tex` file is authoritative; rebuild the PDF from it.
