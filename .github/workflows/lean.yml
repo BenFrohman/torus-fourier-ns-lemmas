@@ -1,0 +1,29 @@
+name: Lean build and axiom audit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+      - name: Build
+        run: lake build
+      - name: Axiom audit
+        run: |
+          lake env lean AxiomReport.lean 2>&1 | tee axiom-audit.log
+          if grep -q "sorryAx" axiom-audit.log; then echo "sorryAx found"; exit 1; fi
+          if grep -q "AxiomReport FAIL" axiom-audit.log; then echo "nonstandard axiom found"; exit 1; fi
+          grep -q "nonstandard: 0" axiom-audit.log
