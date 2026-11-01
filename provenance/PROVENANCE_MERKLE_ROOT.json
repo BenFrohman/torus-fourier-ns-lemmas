@@ -51,11 +51,11 @@
       "sha256": "757fb090d07654c251bfe4bb2efae436db061f0c74a611a31077706e4db50df6",
       "bytes": 84
     },
-    "audit/TITAN_AUDIT_CERTIFICATE.json": {
+    "provenance/PROVENANCE_HASHES.json": {
       "sha256": "f72f42e78c35eca097a77752f7a2f04eb03e83ca7157566837b48518eabb1bf3",
       "bytes": 2993
     },
-    "audit/TITAN_AUDIT_REPORT.md": {
+    "provenance/PROVENANCE_HASHES_REPORT.md": {
       "sha256": "ad474fbde2903ece68e1be639e6c8ba9f56c018e1c30f09229d4fc15b6e005fb",
       "bytes": 1017
     },
