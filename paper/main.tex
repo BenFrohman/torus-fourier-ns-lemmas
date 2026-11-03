@@ -6,6 +6,8 @@
 \title{Fourier Lemmas on the Three-Torus: Heat Smoothing, the $L^2$ Strain Identity,\\ and the Curl of the Energy Derivative, Formalised in Lean~4}
 \author{Benjamin Stanley Frohman\\ORCID 0009-0006-7068-3718}
 \date{DRAFT --- revised 1 November 2026 (not peer reviewed)}
+\usepackage{longtable}
+\usepackage{url}
 \begin{document}\maketitle
 % The mathematics in every section is taken from the Lean build (TorusFourierNS/*.lean).
 % Commentary blocks quote the author's earlier drafts and notes, with the source and date.
@@ -123,4 +125,237 @@ propositions \texttt{SobolevCommutatorEstimate}, \texttt{GalerkinUniformHsBound}
 \textbf{Open.} The range $3/2<s\le5/2$ of the transport bound; passage from Galerkin solutions to
 solutions of the Navier--Stokes equations; $L^p$ strain bounds for $p\ne2$; and global existence or
 regularity of 3D Navier--Stokes, which this work does not address.
+\appendix
+\section{Verification certificate}\label{app:verification-certificate}
+
+The formal development was machine-checked as follows.
+
+{\raggedright
+\begin{itemize}
+\item Repository:\\ {\footnotesize\url{https://github.com/BenFrohman/torus-fourier-ns-lemmas}}
+\item Verified commit:\\ {\footnotesize\texttt{5f8d6c4284d4f20724e3c0b5f2f22d1114e0a258}}
+\item Lean toolchain: \texttt{leanprover/lean4:v4.30.0-rc1}
+\item Mathlib: tag \texttt{v4.30.0-rc1}, commit (from \texttt{lake-manifest.json})\\ {\footnotesize\texttt{0c154d67103f74be3a0f2c509f72ccbf5be9f2a7}}
+\item Continuous integration run (build, axiom audit, \texttt{sorry}/\texttt{axiom} scan; passed):\\ {\footnotesize\url{https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/runs/41574085662}}
+\item SHA-256 of the GitHub source tarball of the verified commit, downloaded twice with identical result:\\ {\footnotesize\url{https://github.com/BenFrohman/torus-fourier-ns-lemmas/archive/5f8d6c4284d4f20724e3c0b5f2f22d1114e0a258.tar.gz}}\\
+{\footnotesize\texttt{d49eb9d26a0e5123ca7272f9ffd7b6598da03606f4950a10b74a91d0759f9fc1}}
+\end{itemize}\par}
+
+The tarball hash refers to the verified commit rather than to a release tag, since a document cannot contain the hash of an archive that includes itself. The Lean sources are unchanged between that commit and the release tag.
+
+\textbf{The development contains no \texttt{sorry} and no user-declared axioms.} Every one of the 205 theorems and lemmas listed below depends only on Lean's standard axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} (or on none). The table is the verbatim output of \texttt{lake env lean AxiomAudit.lean} (\texttt{\#print axioms}) on the verified commit.
+
+{\footnotesize
+\begin{longtable}{p{0.55\linewidth}p{0.38\linewidth}}
+\hline
+Lean declaration & \texttt{\#print axioms} \\
+\hline\endhead
+\path{TorusFourierNS.coeff_eq_mFourierCoeff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.coeff_multiplier} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ext_coeff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.memℓp_mul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_multiplier_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.nsq_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.parseval_norm_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_coeff_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.two_toReal} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.one_le_sobW} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_fconv_inner} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_fconv_inner_of_gt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_norm_fconv_inner} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_sq_of_memHs} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.DivergenceFreeL2MeanZero.div_free} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.DivergenceFreeL2MeanZero.mean_zero} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.DivergenceFreeL2MeanZero.summable} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.abs_pairing_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.divergenceFree_iff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldCurl_functionalDerivative_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldCurl_stream_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldEnergy_curl} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldEnergy_curl_L2} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldEnergy_expand} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldFunctionalDerivative_energy} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldFunctionalDerivative_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldGateauxRep_unique} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldPairing_singleDir} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.fieldStream_isGateauxRep} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.finEnergy_add_smul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.finEnergy_curl} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.finEnergy_singleDir} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.kvec_ksq_ne_zero} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeE_curl} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeEnergy_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.streamFunctionRepresentative_T3} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_coeffField} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_pairing} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.clampC_dist_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.clampC_norm_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.clampC_of_norm_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.clampG_dist_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.clampG_norm_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.clampG_of_norm_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.clamp_real_abs} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNS_continuation_of_hsBound} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNS_continuation_of_normBound} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsBoxConst_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_le_hsNormField_mul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinHsEnergyInequality_of_transport} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNSField_apply} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkin_uniform_bound_of_energy} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormField_extendG_restrictG_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormSq_extendG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormSq_extendG_hasDerivAt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ode_barrier} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.viscCoeff_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.dot_add'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.dot_galerkinNSField} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.dot_neg'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.dot_self_kvec} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.dot_smulC} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.dot_smulR} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.extendG_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.extendG_apply} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.extendG_smul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNS_divergenceFree} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNS_local_existence} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.gconv_add_left} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.gconv_add_right} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.gconv_smul_left} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.gconv_smul_right} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.lerayP_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.lerayP_divFree} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.lerayP_smul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.nsBilinCLM_apply} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.divergenceFree_extendG_restrictG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.extendG_reflG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinField_contDiff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNSField_contDiff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNSField_reflG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNS_divergenceFree_Icc} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNS_hermitian_Icc} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinNS_structure_Icc} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.gconv_reflG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hermitian_extendG_restrictG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hermitian_of_reflG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ksq_kvec_neg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ksq_neg'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.kvec_neg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.lerayP_conj} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ode_unique_Icc} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.reflG_hasDerivAt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.reflG_of_hermitian} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.reflG_reflG} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.curl_modeFunctionalDerivative_eq_u} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeFunctionalDerivative_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeFunctionalDerivative_modeEnergy} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeGateauxRep_unique} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.streamSym_isModeGateauxRep} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.HsSq_zero} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.coeff_heat} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.heat.congr_simp} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.heat_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.heat_smoothing} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.heat_smoothing_real} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.heat_zero} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.inHs_zero} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.multiplier.congr_simp} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_heatSymbol} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_heatSymbol_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_heat_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.one_add_pow_mul_exp_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.one_add_rpow_mul_exp_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.rpow_le_factorial_ceil_mul_exp} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.DivergenceFree.add'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.DivergenceFree.smul'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.MemHsField.add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.MemHsField.sub} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.coeff_le_hsNorm} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.divergenceFree_of_hs_limit} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkin_local_existence} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsField_complete} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsLp.congr_simp} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormField_add_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormField_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormField_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormField_sub_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsWeighted_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsWeighted_sub} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hs_two_toReal} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.memHsField_iff} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_hsWeighted_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.one_add_sq_pos} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sobW_peetre} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sobW_pos} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.tendsto_coeff_of_hs} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.comp_le_hsNormSq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.comp_product_bound} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ennCS} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ennCS_fin} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ennr_add_sq_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.ennr_half_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.hsNormSq_ennr} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.l1_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sobW_neg_le_prod} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sobolevProductEstimate} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sqrt_sobW_neg_mul} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sqrt_sobW_peetre} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_one_add_sq_rpow'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.summable_sobW_neg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.tsum_conv_comm} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.wh_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.young_l1_l2} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.young_l2_l1} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.L2_strain_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.L2_strain_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.curl_deltaH_eq_u} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.curl_sq_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.curl_stream_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeEnergy_curl} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeEnergy_expand} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.normsq_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.strain_sq_eq_half_curl_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.strain_sq_le_curl_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinTameEnergyInequality_of_gt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinTameTransportBound_of_gt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkin_hs_propagation} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.tameConst_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.aC_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.abs_dotZ_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.abs_mode_le_nrm} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.abs_rpow_sub_rpow_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.br_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.br_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.br_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinHsEnergyInequality_of_gt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkinTransportBound_of_gt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.galerkin_uniform_bound_of_gt} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.kpConst_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.leray_pairing} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.modeBox_neg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_triTerm_sub_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_uconj_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.norm_udot_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.nrm_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.nrm_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.nsq_add} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.nsq_add_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.nsq_neg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.preTerm_sum_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.rpow_sub_rpow_le_of_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sig_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sig_neg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sig_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sig_sq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sobW_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sq_sum_fin3_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.sum_shift_sq_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.transportConst_nonneg} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.transport_pairing_eq} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.triTerm_sym_cancel} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.weight_commutator_le} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.young_box} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\path{TorusFourierNS.young_box'} & \texttt{[propext, Classical.choice, Quot.sound]} \\
+\hline
+\end{longtable}}
+
 \end{document}
