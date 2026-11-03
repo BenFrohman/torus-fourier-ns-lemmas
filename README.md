@@ -1,6 +1,6 @@
 # torus-fourier-ns-lemmas
 
-[![Lean certificate](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/certify.yml/badge.svg)](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/certify.yml)
+[![lean.yml](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/lean.yml/badge.svg?branch=main)](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/lean.yml)
 
 Lean 4 + Mathlib (`v4.30.0-rc1`) lemmas on the flat 3-torus `T³ = UnitAddTorus (Fin 3)`, the
 product of three unit circles, built on Mathlib's multi-dimensional Fourier series
