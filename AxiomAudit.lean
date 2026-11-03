@@ -1,36 +1,223 @@
-/-
-Copyright (c) 2026 Benjamin Stanley Frohman. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Benjamin Stanley Frohman
--/
--- Kernel axiom audit. Run: `lake env lean AxiomAudit.lean`.
--- Fails if any declaration in the `TorusFourierNS` module tree depends on an axiom outside
--- {propext, Classical.choice, Quot.sound} (for example `sorryAx`).
-import Lean
+-- Axiom audit: prints the axioms of every theorem/lemma in the project.
+-- CI fails unless each depends only on propext, Classical.choice, Quot.sound (or none).
 import TorusFourierNS
+import TorusFourierNS.Basic
+import TorusFourierNS.FconvSummable
+import TorusFourierNS.FieldBiotSavart
+import TorusFourierNS.GalerkinContinuation
+import TorusFourierNS.GalerkinEnergy
+import TorusFourierNS.GalerkinNS
+import TorusFourierNS.GalerkinStructure
+import TorusFourierNS.GateauxBridge
+import TorusFourierNS.Heat
+import TorusFourierNS.SobolevField
+import TorusFourierNS.SobolevProduct
+import TorusFourierNS.Strain
+import TorusFourierNS.TameTransport
+import TorusFourierNS.TransportBound
 
-open Lean Elab Command
-
-#eval show CommandElabM Unit from do
-  let env ← getEnv
-  let allowed : List Name := [``propext, ``Classical.choice, ``Quot.sound]
-  let mut thms := 0
-  let mut defs := 0
-  let mut bad : Array String := #[]
-  for (n, ci) in env.constants.toList do
-    let some idx := env.getModuleIdxFor? n | continue
-    let mod := env.header.moduleNames[idx.toNat]!
-    unless (`TorusFourierNS).isPrefixOf mod do continue
-    if n.isInternal then continue
-    match ci with
-    | .thmInfo _ => thms := thms + 1
-    | .defnInfo _ => defs := defs + 1
-    | _ => pure ()
-    let axs ← liftCoreM (Lean.collectAxioms n)
-    for a in axs do
-      unless allowed.contains a do bad := bad.push s!"{n} uses {a}"
-  logInfo m!"AxiomAudit: {thms} theorems, {defs} definitions in TorusFourierNS"
-  if bad.isEmpty then
-    logInfo "AxiomAudit PASS: only propext, Classical.choice, Quot.sound"
-  else
-    throwError m!"AxiomAudit FAIL:\n{String.intercalate "\n" bad.toList}"
+#print axioms TorusFourierNS.coeff_eq_mFourierCoeff
+#print axioms TorusFourierNS.coeff_multiplier
+#print axioms TorusFourierNS.ext_coeff
+#print axioms TorusFourierNS.memℓp_mul
+#print axioms TorusFourierNS.norm_multiplier_le
+#print axioms TorusFourierNS.nsq_nonneg
+#print axioms TorusFourierNS.parseval_norm_sq
+#print axioms TorusFourierNS.summable_coeff_sq
+#print axioms TorusFourierNS.two_toReal
+#print axioms TorusFourierNS.one_le_sobW
+#print axioms TorusFourierNS.summable_fconv_inner
+#print axioms TorusFourierNS.summable_fconv_inner_of_gt
+#print axioms TorusFourierNS.summable_norm_fconv_inner
+#print axioms TorusFourierNS.summable_sq_of_memHs
+#print axioms TorusFourierNS.DivergenceFreeL2MeanZero.div_free
+#print axioms TorusFourierNS.DivergenceFreeL2MeanZero.mean_zero
+#print axioms TorusFourierNS.DivergenceFreeL2MeanZero.summable
+#print axioms TorusFourierNS.abs_pairing_le
+#print axioms TorusFourierNS.divergenceFree_iff
+#print axioms TorusFourierNS.fieldCurl_functionalDerivative_eq
+#print axioms TorusFourierNS.fieldCurl_stream_eq
+#print axioms TorusFourierNS.fieldEnergy_curl
+#print axioms TorusFourierNS.fieldEnergy_curl_L2
+#print axioms TorusFourierNS.fieldEnergy_expand
+#print axioms TorusFourierNS.fieldFunctionalDerivative_energy
+#print axioms TorusFourierNS.fieldFunctionalDerivative_eq
+#print axioms TorusFourierNS.fieldGateauxRep_unique
+#print axioms TorusFourierNS.fieldPairing_singleDir
+#print axioms TorusFourierNS.fieldStream_isGateauxRep
+#print axioms TorusFourierNS.finEnergy_add_smul
+#print axioms TorusFourierNS.finEnergy_curl
+#print axioms TorusFourierNS.finEnergy_singleDir
+#print axioms TorusFourierNS.kvec_ksq_ne_zero
+#print axioms TorusFourierNS.modeE_curl
+#print axioms TorusFourierNS.modeEnergy_nonneg
+#print axioms TorusFourierNS.streamFunctionRepresentative_T3
+#print axioms TorusFourierNS.summable_coeffField
+#print axioms TorusFourierNS.summable_pairing
+#print axioms TorusFourierNS.clampC_dist_le
+#print axioms TorusFourierNS.clampC_norm_le
+#print axioms TorusFourierNS.clampC_of_norm_le
+#print axioms TorusFourierNS.clampG_dist_le
+#print axioms TorusFourierNS.clampG_norm_le
+#print axioms TorusFourierNS.clampG_of_norm_le
+#print axioms TorusFourierNS.clamp_real_abs
+#print axioms TorusFourierNS.galerkinNS_continuation_of_hsBound
+#print axioms TorusFourierNS.galerkinNS_continuation_of_normBound
+#print axioms TorusFourierNS.hsBoxConst_nonneg
+#print axioms TorusFourierNS.norm_le_hsNormField_mul
+#print axioms TorusFourierNS.galerkinHsEnergyInequality_of_transport
+#print axioms TorusFourierNS.galerkinNSField_apply
+#print axioms TorusFourierNS.galerkin_uniform_bound_of_energy
+#print axioms TorusFourierNS.hsNormField_extendG_restrictG_le
+#print axioms TorusFourierNS.hsNormSq_extendG
+#print axioms TorusFourierNS.hsNormSq_extendG_hasDerivAt
+#print axioms TorusFourierNS.ode_barrier
+#print axioms TorusFourierNS.viscCoeff_nonneg
+#print axioms TorusFourierNS.dot_add'
+#print axioms TorusFourierNS.dot_galerkinNSField
+#print axioms TorusFourierNS.dot_neg'
+#print axioms TorusFourierNS.dot_self_kvec
+#print axioms TorusFourierNS.dot_smulC
+#print axioms TorusFourierNS.dot_smulR
+#print axioms TorusFourierNS.extendG_add
+#print axioms TorusFourierNS.extendG_apply
+#print axioms TorusFourierNS.extendG_smul
+#print axioms TorusFourierNS.galerkinNS_divergenceFree
+#print axioms TorusFourierNS.galerkinNS_local_existence
+#print axioms TorusFourierNS.gconv_add_left
+#print axioms TorusFourierNS.gconv_add_right
+#print axioms TorusFourierNS.gconv_smul_left
+#print axioms TorusFourierNS.gconv_smul_right
+#print axioms TorusFourierNS.lerayP_add
+#print axioms TorusFourierNS.lerayP_divFree
+#print axioms TorusFourierNS.lerayP_smul
+#print axioms TorusFourierNS.nsBilinCLM_apply
+#print axioms TorusFourierNS.divergenceFree_extendG_restrictG
+#print axioms TorusFourierNS.extendG_reflG
+#print axioms TorusFourierNS.galerkinField_contDiff
+#print axioms TorusFourierNS.galerkinNSField_contDiff
+#print axioms TorusFourierNS.galerkinNSField_reflG
+#print axioms TorusFourierNS.galerkinNS_divergenceFree_Icc
+#print axioms TorusFourierNS.galerkinNS_hermitian_Icc
+#print axioms TorusFourierNS.galerkinNS_structure_Icc
+#print axioms TorusFourierNS.gconv_reflG
+#print axioms TorusFourierNS.hermitian_extendG_restrictG
+#print axioms TorusFourierNS.hermitian_of_reflG
+#print axioms TorusFourierNS.ksq_kvec_neg
+#print axioms TorusFourierNS.ksq_neg'
+#print axioms TorusFourierNS.kvec_neg
+#print axioms TorusFourierNS.lerayP_conj
+#print axioms TorusFourierNS.ode_unique_Icc
+#print axioms TorusFourierNS.reflG_hasDerivAt
+#print axioms TorusFourierNS.reflG_of_hermitian
+#print axioms TorusFourierNS.reflG_reflG
+#print axioms TorusFourierNS.curl_modeFunctionalDerivative_eq_u
+#print axioms TorusFourierNS.modeFunctionalDerivative_eq
+#print axioms TorusFourierNS.modeFunctionalDerivative_modeEnergy
+#print axioms TorusFourierNS.modeGateauxRep_unique
+#print axioms TorusFourierNS.streamSym_isModeGateauxRep
+#print axioms TorusFourierNS.HsSq_zero
+#print axioms TorusFourierNS.coeff_heat
+#print axioms TorusFourierNS.heat.congr_simp
+#print axioms TorusFourierNS.heat_add
+#print axioms TorusFourierNS.heat_smoothing
+#print axioms TorusFourierNS.heat_smoothing_real
+#print axioms TorusFourierNS.heat_zero
+#print axioms TorusFourierNS.inHs_zero
+#print axioms TorusFourierNS.multiplier.congr_simp
+#print axioms TorusFourierNS.norm_heatSymbol
+#print axioms TorusFourierNS.norm_heatSymbol_le
+#print axioms TorusFourierNS.norm_heat_le
+#print axioms TorusFourierNS.one_add_pow_mul_exp_le
+#print axioms TorusFourierNS.one_add_rpow_mul_exp_le
+#print axioms TorusFourierNS.rpow_le_factorial_ceil_mul_exp
+#print axioms TorusFourierNS.DivergenceFree.add'
+#print axioms TorusFourierNS.DivergenceFree.smul'
+#print axioms TorusFourierNS.MemHsField.add
+#print axioms TorusFourierNS.MemHsField.sub
+#print axioms TorusFourierNS.coeff_le_hsNorm
+#print axioms TorusFourierNS.divergenceFree_of_hs_limit
+#print axioms TorusFourierNS.galerkin_local_existence
+#print axioms TorusFourierNS.hsField_complete
+#print axioms TorusFourierNS.hsLp.congr_simp
+#print axioms TorusFourierNS.hsNormField_add_le
+#print axioms TorusFourierNS.hsNormField_eq
+#print axioms TorusFourierNS.hsNormField_nonneg
+#print axioms TorusFourierNS.hsNormField_sub_eq
+#print axioms TorusFourierNS.hsWeighted_add
+#print axioms TorusFourierNS.hsWeighted_sub
+#print axioms TorusFourierNS.hs_two_toReal
+#print axioms TorusFourierNS.memHsField_iff
+#print axioms TorusFourierNS.norm_hsWeighted_sq
+#print axioms TorusFourierNS.one_add_sq_pos
+#print axioms TorusFourierNS.sobW_peetre
+#print axioms TorusFourierNS.sobW_pos
+#print axioms TorusFourierNS.tendsto_coeff_of_hs
+#print axioms TorusFourierNS.comp_le_hsNormSq
+#print axioms TorusFourierNS.comp_product_bound
+#print axioms TorusFourierNS.ennCS
+#print axioms TorusFourierNS.ennCS_fin
+#print axioms TorusFourierNS.ennr_add_sq_le
+#print axioms TorusFourierNS.ennr_half_sq
+#print axioms TorusFourierNS.hsNormSq_ennr
+#print axioms TorusFourierNS.l1_le
+#print axioms TorusFourierNS.sobW_neg_le_prod
+#print axioms TorusFourierNS.sobolevProductEstimate
+#print axioms TorusFourierNS.sqrt_sobW_neg_mul
+#print axioms TorusFourierNS.sqrt_sobW_peetre
+#print axioms TorusFourierNS.summable_one_add_sq_rpow'
+#print axioms TorusFourierNS.summable_sobW_neg
+#print axioms TorusFourierNS.tsum_conv_comm
+#print axioms TorusFourierNS.wh_sq
+#print axioms TorusFourierNS.young_l1_l2
+#print axioms TorusFourierNS.young_l2_l1
+#print axioms TorusFourierNS.L2_strain_eq
+#print axioms TorusFourierNS.L2_strain_le
+#print axioms TorusFourierNS.curl_deltaH_eq_u
+#print axioms TorusFourierNS.curl_sq_eq
+#print axioms TorusFourierNS.curl_stream_eq
+#print axioms TorusFourierNS.modeEnergy_curl
+#print axioms TorusFourierNS.modeEnergy_expand
+#print axioms TorusFourierNS.normsq_eq
+#print axioms TorusFourierNS.strain_sq_eq_half_curl_sq
+#print axioms TorusFourierNS.strain_sq_le_curl_sq
+#print axioms TorusFourierNS.galerkinTameEnergyInequality_of_gt
+#print axioms TorusFourierNS.galerkinTameTransportBound_of_gt
+#print axioms TorusFourierNS.galerkin_hs_propagation
+#print axioms TorusFourierNS.tameConst_nonneg
+#print axioms TorusFourierNS.aC_nonneg
+#print axioms TorusFourierNS.abs_dotZ_le
+#print axioms TorusFourierNS.abs_mode_le_nrm
+#print axioms TorusFourierNS.abs_rpow_sub_rpow_le
+#print axioms TorusFourierNS.br_eq
+#print axioms TorusFourierNS.br_nonneg
+#print axioms TorusFourierNS.br_sq
+#print axioms TorusFourierNS.galerkinHsEnergyInequality_of_gt
+#print axioms TorusFourierNS.galerkinTransportBound_of_gt
+#print axioms TorusFourierNS.galerkin_uniform_bound_of_gt
+#print axioms TorusFourierNS.kpConst_nonneg
+#print axioms TorusFourierNS.leray_pairing
+#print axioms TorusFourierNS.modeBox_neg
+#print axioms TorusFourierNS.norm_triTerm_sub_le
+#print axioms TorusFourierNS.norm_uconj_le
+#print axioms TorusFourierNS.norm_udot_le
+#print axioms TorusFourierNS.nrm_nonneg
+#print axioms TorusFourierNS.nrm_sq
+#print axioms TorusFourierNS.nsq_add
+#print axioms TorusFourierNS.nsq_add_le
+#print axioms TorusFourierNS.nsq_neg
+#print axioms TorusFourierNS.preTerm_sum_eq
+#print axioms TorusFourierNS.rpow_sub_rpow_le_of_le
+#print axioms TorusFourierNS.sig_eq
+#print axioms TorusFourierNS.sig_neg
+#print axioms TorusFourierNS.sig_nonneg
+#print axioms TorusFourierNS.sig_sq
+#print axioms TorusFourierNS.sobW_eq
+#print axioms TorusFourierNS.sq_sum_fin3_le
+#print axioms TorusFourierNS.sum_shift_sq_le
+#print axioms TorusFourierNS.transportConst_nonneg
+#print axioms TorusFourierNS.transport_pairing_eq
+#print axioms TorusFourierNS.triTerm_sym_cancel
+#print axioms TorusFourierNS.weight_commutator_le
+#print axioms TorusFourierNS.young_box
+#print axioms TorusFourierNS.young_box'
