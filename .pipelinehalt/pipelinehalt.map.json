@@ -1,0 +1,34 @@
+{
+  "claims": {
+    "lemma-1": {
+      "lean": [
+        "parseval_norm_sq"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "lemma-2": {
+      "lean": [
+        "norm_multiplier_le"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-5": {
+      "lean": [
+        "heat_smoothing"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-6": {
+      "lean": [
+        "heat_smoothing_real"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    },
+    "theorem-8": {
+      "lean": [
+        "L2_strain_eq"
+      ],
+      "note": "auto: \\lean/\\texttt names cited in the claim that exist as declarations"
+    }
+  }
+}
