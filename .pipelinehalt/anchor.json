@@ -1,0 +1,100 @@
+{
+  "title": "Fourier Lemmas on the Three-Torus: Heat Smoothing, the $L^2$ Strain Identity,\\\\ and the Curl of the Energy Derivative, Formalised in Lean~4",
+  "source": "paper/main.tex",
+  "claims": [
+    {
+      "id": "lemma-1",
+      "number": "Lemma 1",
+      "statement": "$\\|f\\|_2^2=\\sum_n|\\hat f(n)|^2$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:33",
+      "title": "Parseval, \\texttt{parseval\\_norm\\_sq}"
+    },
+    {
+      "id": "lemma-2",
+      "number": "Lemma 2",
+      "statement": "If $|m(n)|\\le1$ for all $n$, then $T_m f=\\sum m(n)\\hat f(n)e_n$ defines $T_m:L^2\\to L^2$ with $\\|T_mf\\|_2\\le\\|f\\|_2$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:36",
+      "title": "\\texttt{norm\\_multiplier\\_le}"
+    },
+    {
+      "id": "theorem-3",
+      "number": "Theorem 3",
+      "statement": "For $\\nu,s,t\\ge0$: $\\widehat{e^{t\\nu\\Delta}f}(n)=e^{-\\nu|n|^2t}\\hat f(n)$, $e^{0}=\\mathrm{id}$, $e^{s\\nu\\Delta}e^{t\\nu\\Delta}=e^{(s+t)\\nu\\Delta}$, $\\|e^{t\\nu\\Delta}f\\|_2\\le\\|f\\|_2$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:49"
+    },
+    {
+      "id": "lemma-4",
+      "number": "Lemma 4",
+      "statement": "For $k\\in\\mathbb N$, $a>0$, $x\\ge0$: $(1+x)^ke^{-ax}\\le k!\\,e^a a^{-k}$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:62"
+    },
+    {
+      "id": "theorem-5",
+      "number": "Theorem 5",
+      "statement": "For $\\nu,t>0$, $s\\in\\mathbb R$, $k\\in\\mathbb N$, $f\\in H^s$: $e^{t\\nu\\Delta}f\\in H^{s+k}$ and $\\|e^{t\\nu\\Delta}f\\|_{H^{s+k}}^2\\le k!\\,e^{2\\nu t}(2\\nu t)^{-k}\\|f\\|_{H^s}^2$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:64",
+      "title": "\\texttt{heat\\_smoothing}"
+    },
+    {
+      "id": "theorem-6",
+      "number": "Theorem 6",
+      "statement": "The same holds for every real $k\\ge0$ with $k!$ replaced by $\\lceil k\\rceil!$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:69",
+      "title": "\\texttt{heat\\_smoothing\\_real}"
+    },
+    {
+      "id": "lemma-7",
+      "number": "Lemma 7",
+      "statement": "$\\sum_{ij}|\\hat S_{ij}|^2=\\tfrac12|\\hat\\omega|^2$ and $|\\hat\\omega|^2=4\\pi^2|k|^2|\\hat u|^2$.",
+      "kind": "lemma",
+      "source": "paper/main.tex:80"
+    },
+    {
+      "id": "theorem-8",
+      "number": "Theorem 8",
+      "statement": "For $L^2$ fields with these coefficients, $\\|S\\|_2^2=\\tfrac12\\|\\omega\\|_2^2\\le\\|\\omega\\|_2^2$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:84",
+      "title": "\\texttt{L2\\_strain\\_eq}"
+    },
+    {
+      "id": "theorem-9",
+      "number": "Theorem 9",
+      "statement": "For $k\\ne0$, $k\\cdot\\hat u=0$: $H(\\mathrm{curl}\\,\\hat u)=\\tfrac12|\\hat u|^2$; $H(\\omega+\\varepsilon\\eta)=H(\\omega)+\\varepsilon\\,\\mathrm{Re}\\langle\\hat\\psi,\\eta\\rangle+\\varepsilon^2H(\\eta)$, so $\\delta H/\\delta\\omega=\\hat\\psi$; and $2\\pi i\\,k\\times\\hat\\psi=\\hat u$, i.e.\\ $\\mathrm{curl}(\\delta H/\\delta\\omega)=u$.",
+      "kind": "theorem",
+      "source": "paper/main.tex:89"
+    }
+  ],
+  "clarifications": {
+    "6b895c5da671": {
+      "claimId": "lemma-1",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 1 (lemma-1) states: “$\\|f\\|_2^2=\\sum_n|\\hat f(n)|^2$.”. Its title is “Parseval, \\texttt{parseval\\_norm\\_sq}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) parseval_norm_sq, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.528Z"
+    },
+    "76d4a6a87f7e": {
+      "claimId": "lemma-2",
+      "kind": "ambiguous",
+      "question": "Paper claim Lemma 2 (lemma-2) states: “If $|m(n)|\\le1$ for all $n$, then $T_m f=\\sum m(n)\\hat f(n)e_n$ defines $T_m:L^2\\to L^2$ with $\\|T_mf\\|_2\\le\\|f\\|_2$.”. Its title is “\\texttt{norm\\_multiplier\\_le}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) norm_multiplier_le, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.567Z"
+    },
+    "55cf13bac57c": {
+      "claimId": "theorem-5",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 5 (theorem-5) states: “For $\\nu,t>0$, $s\\in\\mathbb R$, $k\\in\\mathbb N$, $f\\in H^s$: $e^{t\\nu\\Delta}f\\in H^{s+k}$ and $\\|e^{t\\nu\\Delta}f\\|_{H^{s+k}}^2\\le k!\\,e^{2\\nu t}(2\\nu t)^{-k}\\|f\\|_{H^s}^2$.”. Its title is “\\texttt{heat\\_smoothing}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording (strict, mechanical): the title cites Lean name(s) heat_smoothing, each an existing declaration mapped to this claim; the title makes no further assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T21:11:06.605Z"
+    }
+  }
+}
