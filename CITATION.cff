@@ -6,5 +6,6 @@ authors:
     given-names: "Benjamin Stanley"
     orcid: "https://orcid.org/0009-0006-7068-3718"
     email: "frohmanbenjamin@gmail.com"
+doi: "10.5281/zenodo.23940664"
 license: "Apache-2.0"
 repository-code: "https://github.com/BenFrohman/torus-fourier-ns-lemmas"

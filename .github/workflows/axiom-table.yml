@@ -1,4 +1,4 @@
-name: Lean certificate
+name: Lean build and axiom audit (print-axioms table)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  certify:
+  axiom-table:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

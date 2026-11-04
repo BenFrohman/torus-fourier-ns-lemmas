@@ -5,9 +5,10 @@
 \theoremstyle{remark}\newtheorem*{commentary}{Commentary}
 \title{Fourier Lemmas on the Three-Torus: Heat Smoothing, the $L^2$ Strain Identity,\\ and the Curl of the Energy Derivative, Formalised in Lean~4}
 \author{Benjamin Stanley Frohman\\ORCID 0009-0006-7068-3718}
-\date{DRAFT --- revised 1 November 2026 (not peer reviewed)}
+\date{DRAFT --- revised 4 November 2026 (not peer reviewed)\\ DOI \texttt{10.5281/zenodo.23940664}}
 \usepackage{longtable}
 \usepackage{url}
+\usepackage{hyperref}
 \begin{document}\maketitle
 % The mathematics in every section is taken from the Lean build (TorusFourierNS/*.lean).
 % Commentary blocks quote the author's earlier drafts and notes, with the source and date.
@@ -126,9 +127,9 @@ propositions \texttt{SobolevCommutatorEstimate}, \texttt{GalerkinUniformHsBound}
 solutions of the Navier--Stokes equations; $L^p$ strain bounds for $p\ne2$; and global existence or
 regularity of 3D Navier--Stokes, which this work does not address.
 \appendix
-\section{Verification certificate}\label{app:verification-certificate}
+\section{Build and axiom audit}\label{app:build-axiom-audit}
 
-The formal development was machine-checked as follows.
+The formal development was built and its axioms audited as follows. This is a build and axiom audit, not peer review.
 
 {\raggedright
 \begin{itemize}
@@ -143,7 +144,7 @@ The formal development was machine-checked as follows.
 
 The tarball hash refers to the verified commit rather than to a release tag, since a document cannot contain the hash of an archive that includes itself. The Lean sources are unchanged between that commit and the release tag.
 
-\textbf{The development contains no \texttt{sorry} and no user-declared axioms.} Every one of the 205 theorems and lemmas listed below depends only on Lean's standard axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} (or on none). The table is the verbatim output of \texttt{lake env lean AxiomAudit.lean} (\texttt{\#print axioms}) on the verified commit.
+\textbf{The development contains no \texttt{sorry} and no user-declared axioms.} Every one of the 205 named theorems and lemmas listed below (the full \texttt{AxiomReport.lean} run covers all 250 theorems, with the same result) depends only on Lean's standard axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} (or on none). The table is the verbatim output of \texttt{lake env lean AxiomAudit.lean} (\texttt{\#print axioms}) on the verified commit.
 
 {\footnotesize
 \begin{longtable}{p{0.55\linewidth}p{0.38\linewidth}}

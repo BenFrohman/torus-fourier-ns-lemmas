@@ -1,5 +1,7 @@
 # torus-fourier-ns-lemmas
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23940664.svg)](https://doi.org/10.5281/zenodo.23940664) Paper: `paper/main.pdf`, archived on Zenodo, DOI [10.5281/zenodo.23940664](https://doi.org/10.5281/zenodo.23940664).
+
 [![lean.yml](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/lean.yml/badge.svg?branch=main)](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/lean.yml)
 
 Lean 4 + Mathlib (`v4.30.0-rc1`) lemmas on the flat 3-torus `T³ = UnitAddTorus (Fin 3)`, the
