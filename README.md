@@ -227,3 +227,7 @@ What is proved vs. conditional: Results under "Proved" and the added sections ar
 
 
 **PDF note:** the PDFs were rebuilt from the `.tex` sources with Tectonic 0.17.0 on 2026-11-02.
+
+## Citation
+
+Cite this work with [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository" button). Zenodo DOI: [10.5281/zenodo.23940664](https://doi.org/10.5281/zenodo.23940664).
