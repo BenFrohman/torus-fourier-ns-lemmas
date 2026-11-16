@@ -1,12 +1,20 @@
 /-
-Copyright (c) 2026 Benjamin Stanley Frohman. Apache-2.0.
+Copyright (c) 2026 Benjamin Stanley Frohman. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Benjamin Stanley Frohman
+-/
+
+import Lean
+import TorusFourierNS
+
+/-!
+# AxiomReport
+
 Axiom report. Run: `lake env lean AxiomReport.lean`.
 Prints `#print axioms`-equivalent output for every theorem in the `TorusFourierNS` module tree
 and fails if any declaration there depends on an axiom other than
 propext, Classical.choice, Quot.sound (for example `sorryAx`).
 -/
-import Lean
-import TorusFourierNS
 
 open Lean Elab Command
 

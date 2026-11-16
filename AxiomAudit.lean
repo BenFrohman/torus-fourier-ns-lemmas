@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2026 Benjamin Stanley Frohman. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Benjamin Stanley Frohman
+-/
+
 -- Axiom audit: prints the axioms of every theorem/lemma in the project.
 -- CI fails unless each depends only on propext, Classical.choice, Quot.sound (or none).
 import TorusFourierNS
@@ -15,6 +21,12 @@ import TorusFourierNS.SobolevProduct
 import TorusFourierNS.Strain
 import TorusFourierNS.TameTransport
 import TorusFourierNS.TransportBound
+
+/-!
+# AxiomAudit
+
+Machine-checked Lean 4 module.
+-/
 
 #print axioms TorusFourierNS.coeff_eq_mFourierCoeff
 #print axioms TorusFourierNS.coeff_multiplier
