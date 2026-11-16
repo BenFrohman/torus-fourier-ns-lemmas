@@ -1,0 +1,21 @@
+checker: leanchecker source shipped with v4.30.0-rc1 (src/lean/LeanChecker.lean), prefix match -> exact match, run with lean --run
+  patch: 93c93
+  patch: <         if !fresh && target.isPrefixOf m || target == m then
+  patch: ---
+  patch: >         if !fresh && target == m || target == m then
+TorusFourierNS: OK (1 module replayed)
+TorusFourierNS.Basic: OK (1 module replayed)
+TorusFourierNS.FconvSummable: OK (1 module replayed)
+TorusFourierNS.FieldBiotSavart: OK (1 module replayed)
+TorusFourierNS.GalerkinContinuation: OK (1 module replayed)
+TorusFourierNS.GalerkinEnergy: OK (1 module replayed)
+TorusFourierNS.GalerkinNS: OK (1 module replayed)
+TorusFourierNS.GalerkinStructure: OK (1 module replayed)
+TorusFourierNS.GateauxBridge: OK (1 module replayed)
+TorusFourierNS.Heat: OK (1 module replayed)
+TorusFourierNS.SobolevField: OK (1 module replayed)
+TorusFourierNS.SobolevProduct: OK (1 module replayed)
+TorusFourierNS.Strain: OK (1 module replayed)
+TorusFourierNS.TameTransport: OK (1 module replayed)
+TorusFourierNS.TransportBound: OK (1 module replayed)
+RESULT: 15 of 15 modules replayed through the kernel, 0 failures

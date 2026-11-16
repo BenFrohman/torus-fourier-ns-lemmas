@@ -1,0 +1,32 @@
+✔ [8264/8279] Built TorusFourierNS.Basic (3.9s)
+✔ [8265/8279] Built TorusFourierNS.Heat (4.6s)
+⚠ [8266/8279] Built TorusFourierNS.Strain (4.9s)
+warning: TorusFourierNS/Strain.lean:131:40: This simp argument is unused:
+  ← Complex.ofReal_pow
+
+Hint: Omit it from the simp argument list.
+  simp [Complex.mul_re, Complex.mul_im,̵ ̵←̵ ̵C̵o̵m̵p̵l̵e̵x̵.̵o̵f̵R̵e̵a̵l̵_̵p̵o̵w̵]
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8267/8279] Built TorusFourierNS.GateauxBridge (3.1s)
+⚠ [8268/8279] Built TorusFourierNS.FieldBiotSavart (3.4s)
+warning: TorusFourierNS/FieldBiotSavart.lean:84:56: This simp argument is unused:
+  mul_one
+
+Hint: Omit it from the simp argument list.
+  simp only [one_pow, neg_one_sq, one_mul, neg_one_mul,̵ ̵m̵u̵l̵_̵o̵n̵e̵] at h1 h2
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [8269/8279] Built TorusFourierNS.SobolevField (4.1s)
+✔ [8270/8279] Built TorusFourierNS.FconvSummable (3.3s)
+✔ [8271/8279] Built TorusFourierNS.GalerkinNS (8.7s)
+✔ [8272/8279] Built TorusFourierNS.SobolevProduct (10s)
+✔ [8273/8279] Built TorusFourierNS.GalerkinEnergy (4.6s)
+✔ [8274/8279] Built TorusFourierNS.TransportBound (10s)
+✔ [8275/8279] Built TorusFourierNS.GalerkinStructure (5.5s)
+✔ [8276/8279] Built TorusFourierNS.TameTransport (8.0s)
+✔ [8277/8279] Built TorusFourierNS.GalerkinContinuation (5.9s)
+✔ [8278/8279] Built TorusFourierNS (2.5s)
+Build completed successfully (8279 jobs).

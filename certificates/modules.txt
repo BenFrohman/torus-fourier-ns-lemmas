@@ -1,0 +1,15 @@
+TorusFourierNS
+TorusFourierNS.Basic
+TorusFourierNS.FconvSummable
+TorusFourierNS.FieldBiotSavart
+TorusFourierNS.GalerkinContinuation
+TorusFourierNS.GalerkinEnergy
+TorusFourierNS.GalerkinNS
+TorusFourierNS.GalerkinStructure
+TorusFourierNS.GateauxBridge
+TorusFourierNS.Heat
+TorusFourierNS.SobolevField
+TorusFourierNS.SobolevProduct
+TorusFourierNS.Strain
+TorusFourierNS.TameTransport
+TorusFourierNS.TransportBound

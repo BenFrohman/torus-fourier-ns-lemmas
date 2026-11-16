@@ -1,0 +1,6 @@
+commit: 0d6d7e8ef8ea3eda05a6cec4ae020426514fec93
+lean-toolchain: leanprover/lean4:v4.30.0-rc1
+lean --version: Lean (version 4.30.0-rc1, x86_64-unknown-linux-gnu, commit 714601baf118066cbf3f282361339c6d06665b2a, Release)
+lake --version: Lake version 5.0.0-src+714601b (Lean version 4.30.0-rc1)
+date (UTC): 2026-11-16T19:13:38Z
+run: https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/runs/43937048203
