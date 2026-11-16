@@ -4,6 +4,10 @@
 
 [![lean.yml](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/lean.yml/badge.svg?branch=main)](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/workflows/lean.yml)
 
+## Kernel certificate
+
+[certificates/CERTIFICATE.md](certificates/CERTIFICATE.md): commit `0d6d7e8`, `leanprover/lean4:v4.30.0-rc1`. `lake build` passes; the sorry/axiom scan finds 0 hits; **250 theorems depend only on `propext`, `Classical.choice`, `Quot.sound`**; 15 of 15 modules replayed through the kernel, 0 failures ([CI run](https://github.com/BenFrohman/torus-fourier-ns-lemmas/actions/runs/43937048203)).
+
 Lean 4 + Mathlib (`v4.30.0-rc1`) lemmas on the flat 3-torus `T³ = UnitAddTorus (Fin 3)`, the
 product of three unit circles, built on Mathlib's multi-dimensional Fourier series
 (`mFourier`, `mFourierCoeff`, `mFourierBasis`, Parseval). Every result below is kernel-checked with
