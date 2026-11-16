@@ -1,0 +1,17 @@
+{
+  "semantics_file": "TorusFourierNS/Semantics.lean",
+  "semantics_module": "TorusFourierNS.Semantics",
+  "paper_path": "paper/main.tex",
+  "paper_sha256": "331ec5aebb67be9849456a23cddd209ce6a50b9b9e6b0731c97441ae40029447",
+  "main_theorems": [
+    "TorusFourierNS.heat_smoothing"
+  ],
+  "lock_region_sha256": "21ac4c2b781c01b48291a7528ffd3c3daa9a1ca28af5539afdb8435c59f4b9c2",
+  "draft_dirs": [
+    "TorusFourierNS/Draft"
+  ],
+  "lean_roots": [
+    "TorusFourierNS",
+    "TorusFourierNS.lean"
+  ]
+}
