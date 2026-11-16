@@ -103,7 +103,8 @@ def formal_claim : Prop :=
 def paper_claim : Prop :=
   ∀ (ν t : ℝ), 0 < ν → 0 < t → ∀ (s : ℝ) (k : ℕ)
     (f g : MeasureTheory.Lp ℂ 2
-      (MeasureTheory.volume : MeasureTheory.Measure (UnitAddTorus (Fin 3)))),
+      (MeasureTheory.Measure.pi fun _ : Fin 3 =>
+        (AddCircle.haarAddCircle : MeasureTheory.Measure UnitAddCircle))),
     (∀ n : Fin 3 → ℤ,
       mFourierCoeff g n = (Real.exp (-(ν * (∑ i, ((n i : ℝ)) ^ 2) * t)) : ℂ) * mFourierCoeff f n) →
     Summable (fun n : Fin 3 → ℤ => (1 + ∑ i, ((n i : ℝ)) ^ 2) ^ s * ‖mFourierCoeff f n‖ ^ 2) →

@@ -6,7 +6,7 @@
   "main_theorems": [
     "TorusFourierNS.heat_smoothing"
   ],
-  "lock_region_sha256": "21ac4c2b781c01b48291a7528ffd3c3daa9a1ca28af5539afdb8435c59f4b9c2",
+  "lock_region_sha256": "2797d7aedf4b987e12b1cf21f42018701dba5545dcb0793395b724fe0292ed5c",
   "draft_dirs": [
     "TorusFourierNS/Draft"
   ],
